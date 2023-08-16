@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loans</title>
+    <script src="/FinanceCompanyFrontend/Scripts/loans_script.js"></script>
+    <link rel="stylesheet" href="/FinanceCompanyFrontend/Styles/bootstrap.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <button type="button" class="btn btn-outline-dark" onclick="display_loans_menu()">Get Loans</button>
+        <div>
+            <label for="loans" class="form-label mt-4">Select a Loan: &nbsp;</label>
+            <select name="" onclick="display_loan()" id="loans" class="form-select">
+                <option value="-1" selected disabled></option>
+            </select>
+        </div>
+        <div id="loan_details">
+            <div id="customer_id"></div>
+            <div id="customer_name"></div>
+            <div id="loan_type"></div>
+            <div id="loan_amount"></div>
+        </div>
+    </div>
+</body>
+
+</html>
