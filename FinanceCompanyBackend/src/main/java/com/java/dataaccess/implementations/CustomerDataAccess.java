@@ -15,11 +15,12 @@ public class CustomerDataAccess implements CustomerContract{
 	FileReader reader;
 	Properties properties;
 	
-	public CustomerDataAccess() throws SQLException, IOException {
+	public CustomerDataAccess() throws SQLException, IOException, ClassNotFoundException {
 		try {
 			reader = new FileReader("C:\\FinanceCompany\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
 			properties = new Properties();
 			properties.load(reader);
+			Class.forName(properties.getProperty("driver"));
 			connectionInstance = createConnection(properties.getProperty("connectionString"),
 					properties.getProperty("username"), properties.getProperty("password"));
 		} catch (IOException e) {
@@ -50,24 +51,27 @@ public class CustomerDataAccess implements CustomerContract{
 		// TODO Auto-generated method stub
 		int result=0;
 		try {
-			statement = connectionInstance.prepareStatement(properties.getProperty("add_loan"));
+			statement = connectionInstance.prepareStatement(properties.getProperty("add_customer"));
 			statement.setInt(1, customer.getCustomerId());
 			statement.setString(2, customer.getCustomerName());
 			statement.setString(3,customer.getGender());
-			statement.setString(3,customer.getContact());
+			statement.setString(4,customer.getContact());
 			result = statement.executeUpdate();
-			closeConnection();
+			
 		}catch(Exception e) {
 			throw e;
+		}
+		finally {
+			closeConnection();
 		}
 		return result==0?false:true;
 	}
 	@Override
 	public List<Customer> getAllCustomers() throws Exception {
 		Customer customer = null;
-		List<Customer> customers = new ArrayList<>();
+		List<Customer> customers = new ArrayList<Customer>();
 		try {
-			statement = connectionInstance.prepareStatement(properties.getProperty("get_all_loans"));
+			statement = connectionInstance.prepareStatement(properties.getProperty("get_all_customers"));
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				customer = new Customer();
@@ -80,7 +84,27 @@ public class CustomerDataAccess implements CustomerContract{
 		}catch(Exception e) {
 			throw e;
 		}
+		finally {
+			closeConnection();
+		}
 		return customers;
+	}
+	@Override
+	public boolean deleteCustomer(int customerId) throws Exception {
+		// TODO Auto-generated method stub
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("delete_customer"));
+			statement.setInt(1, customerId);
+			result = statement.executeUpdate();
+			
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+			closeConnection();
+		}
+		return result==0?false:true;
 	}
 
 }

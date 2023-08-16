@@ -1,5 +1,7 @@
 package com.java.entities;
 
+
+
 public class ServiceResponse<T> {
 	private String mesage;
 	private int statusCode;

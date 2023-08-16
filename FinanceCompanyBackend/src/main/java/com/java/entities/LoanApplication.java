@@ -6,7 +6,7 @@ public class LoanApplication {
 	private int applicationNumber;
 	private int customerId;
 	private int loanId;
-	private double loanAmoount;
+	private double loanAmount;
 	private String loanStatus;
 	private Date applyDate;
 	private int loanTenure;
@@ -14,12 +14,12 @@ public class LoanApplication {
 	
 	public LoanApplication() {}
 
-	public LoanApplication(int applicationNumber, int customerId, int loanId, double loanAmoount, String loanStatus,
+	public LoanApplication(int applicationNumber, int customerId, int loanId, double loanAmount, String loanStatus,
 			Date applyDate, int loanTenure, double loanEmi) {
 		this.applicationNumber = applicationNumber;
 		this.customerId = customerId;
 		this.loanId = loanId;
-		this.loanAmoount = loanAmoount;
+		this.loanAmount = loanAmount;
 		this.loanStatus = loanStatus;
 		this.applyDate = applyDate;
 		this.loanTenure = loanTenure;
@@ -50,12 +50,12 @@ public class LoanApplication {
 		this.loanId = loanId;
 	}
 
-	public double getLoanAmoount() {
-		return loanAmoount;
+	public double getLoanAmount() {
+		return loanAmount;
 	}
 
-	public void setLoanAmoount(double loanAmoount) {
-		this.loanAmoount = loanAmoount;
+	public void setLoanAmount(double loanAmount) {
+		this.loanAmount = loanAmount;
 	}
 
 	public String getLoanStatus() {

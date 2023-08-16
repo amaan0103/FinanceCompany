@@ -1,3 +1,4 @@
+/*
 var data = [{
     "message":"record found",
     "responseData":{
@@ -16,18 +17,31 @@ var data = [{
     },
     "statusCode":200
 }]
+*/
 
-
-function get_all_customers() {
-    return data
+async function get_all_customers() {
+    url = "http://localhost:8080/FinanceCompanyBackend/rest/clerk/getcustomers"
+    const req = new XMLHttpRequest()
+    await req.open('GET',url)
+    let data = await req.send();
+    req.responseType='json'
+    console.log('hehe'+data);
+    req.onload=()=>{
+        data = req.response
+        console.log(data)
+        return data
+    }
+    
+    // return data
 }
 
 window
     .addEventListener(
         'DOMContentLoaded',
-        function () {  
+        async function () {  
             console.log(1);
-            data = get_all_customers()
+            data = await get_all_customers()
+            console.log(data);
             var result = ""
             data.forEach(item => {
                 response = item.responseData

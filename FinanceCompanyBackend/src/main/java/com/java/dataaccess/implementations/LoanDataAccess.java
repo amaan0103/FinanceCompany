@@ -13,11 +13,12 @@ public class LoanDataAccess implements LoanContract{
 	ResultSet resultSet;
 	FileReader reader;
 	Properties properties;
-	public LoanDataAccess() throws SQLException, IOException {
+	public LoanDataAccess() throws SQLException, IOException, ClassNotFoundException {
 		try {
 			reader = new FileReader("C:\\FinanceCompany\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
 			properties = new Properties();
 			properties.load(reader);
+			Class.forName(properties.getProperty("driver"));
 			connectionInstance = createConnection(properties.getProperty("connectionString"),
 					properties.getProperty("username"), properties.getProperty("password"));
 		} catch (IOException e) {
@@ -51,6 +52,8 @@ public class LoanDataAccess implements LoanContract{
 			closeConnection();
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return result==0?false:true;
 	}
@@ -71,6 +74,8 @@ public class LoanDataAccess implements LoanContract{
 			}
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return loans;
 	}
@@ -83,6 +88,8 @@ public class LoanDataAccess implements LoanContract{
 			result = statement.executeUpdate();
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return result==0?false:true;
 	}
