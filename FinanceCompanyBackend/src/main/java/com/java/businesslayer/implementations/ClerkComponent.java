@@ -1,11 +1,18 @@
 package com.java.businesslayer.implementations;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import com.java.dataaccess.contracts.*;
+import com.java.dataaccess.implementations.*;
 
 import com.java.businesslayer.contracts.ClerkBusinessContract;
 import com.java.dataaccess.contracts.CustomerContract;
 import com.java.dataaccess.contracts.LoanApplicationContract;
 import com.java.entities.Customer;
+import com.java.entities.Documents;
+import com.java.entities.FullApplication;
 import com.java.entities.LoanApplication;
 
 public class ClerkComponent<TContract,Timplementation> implements ClerkBusinessContract {
@@ -29,15 +36,43 @@ public class ClerkComponent<TContract,Timplementation> implements ClerkBusinessC
 	}
 
 	@Override
-	public boolean addApplication(LoanApplication app) throws Exception {
+	public boolean addApplication(FullApplication app) throws Exception {
 		// TODO Auto-generated method stub
-		return ((LoanApplicationContract) dao).addApplication(app);
+		LoanApplication loanApplication = new LoanApplication(app.getApplicationNumber(),app.getCustomerId(),app.getLoanId(),
+		app.getLoanAmount(),app.getLoanStatus(),app.getApplyDate(),app.getLoanTenure(),app.getLoanEmi());
+		boolean flag = ((LoanApplicationContract) dao).addApplication(loanApplication);
+		if(!flag)	return false;
+		Documents docs = new Documents(app.getApplicationNumber(),app.getDocuments());
+		DocumentContract docdao = new DocumentDataAccess();
+		flag = docdao.addDocument(docs);
+		return flag;
 	}
 
 	@Override
-	public List<LoanApplication> getAllApplications() throws Exception {
+	public List<FullApplication> getAllApplications() throws Exception {
 		// TODO Auto-generated method stub
-		return ((LoanApplicationContract) dao).getAllApplications();
+		return  ((LoanApplicationContract) dao).getAllApplications();
+//		DocumentContract docdao = new DocumentDataAccess();
+//		List<Documents> docs = docdao.getAllDocuments();
+		
+//		Collections.sort(loanApplication, new Comparator<LoanApplication>() {
+//			@Override
+//			public int compare(LoanApplication o1, LoanApplication o2) {
+//				// TODO Auto-generated method stub
+//				return o1.getApplicationNumber()-o2.getApplicationNumber();
+//			}
+//		});
+//		
+//		Collections.sort(docs, new Comparator<Documents>() {
+//			@Override
+//			public int compare(Documents o1, Documents o2) {
+//				// TODO Auto-generated method stub
+//				return o1.getApplicationNumber()-o2.getApplicationNumber();
+//			}
+//		});
+//		
+//		List<FullApplication> ret = new ArrayList<>();
+//		return ret;
 	}
 
 }

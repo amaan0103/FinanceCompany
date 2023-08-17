@@ -55,7 +55,8 @@ public class CustomerDataAccess implements CustomerContract{
 			statement.setInt(1, customer.getCustomerId());
 			statement.setString(2, customer.getCustomerName());
 			statement.setString(3,customer.getGender());
-			statement.setString(4,customer.getContact());
+			statement.setString(4,customer.getMobile());
+			statement.setString(5,customer.getEmail());
 			result = statement.executeUpdate();
 			
 		}catch(Exception e) {
@@ -78,7 +79,8 @@ public class CustomerDataAccess implements CustomerContract{
 				customer.setCustomerId(resultSet.getInt(1));
 				customer.setCustomerName(resultSet.getString(2));
 				customer.setGender(resultSet.getString(3));
-				customer.setContact(resultSet.getString(4));
+				customer.setMobile(resultSet.getString(4));
+				customer.setEmail(resultSet.getString(5));
 				customers.add(customer);
 			}
 		}catch(Exception e) {

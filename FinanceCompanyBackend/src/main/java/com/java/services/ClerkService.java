@@ -11,6 +11,7 @@ import com.java.dataaccess.contracts.LoanApplicationContract;
 import com.java.dataaccess.implementations.CustomerDataAccess;
 import com.java.dataaccess.implementations.LoanApplicationDataAccess;
 import com.java.entities.Customer;
+import com.java.entities.FullApplication;
 import com.java.entities.LoanApplication;
 import com.java.entities.ServiceResponse;
 
@@ -71,26 +72,26 @@ public class ClerkService {
 	@Path("/submitApplication")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ServiceResponse<LoanApplication> submitApplication(LoanApplication app) throws Exception{
+	public ServiceResponse<FullApplication> submitApplication(FullApplication app) throws Exception{
 		try {
 		ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
 		boolean flag = cc.addApplication(app);
-		return new ServiceResponse<LoanApplication>("added",200,app);
+		return new ServiceResponse<FullApplication>("added",200,app);
 		}catch(Exception e) {
-			return new ServiceResponse<LoanApplication>(e.getMessage(),400,null);
+			return new ServiceResponse<FullApplication>(e.getMessage(),400,null);
 		}
 	}
 	
 	@GET
 	@Path("/getApplications")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ServiceResponse<List<LoanApplication>> getApplications(){
+	public ServiceResponse<List<FullApplication>> getApplications(){
 		try {
 			ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
-		List<LoanApplication> list = cc.getAllApplications();
-		return new ServiceResponse<List<LoanApplication>>("records found",200,list);
+		List<FullApplication> list = cc.getAllApplications();
+		return new ServiceResponse<List<FullApplication>>("records found",200,list);
 		} catch (Exception e) {
-			return new ServiceResponse<List<LoanApplication>>(e.getMessage(), 400, null);
+			return new ServiceResponse<List<FullApplication>>(e.getMessage(), 400, null);
 		}
 	}
 }

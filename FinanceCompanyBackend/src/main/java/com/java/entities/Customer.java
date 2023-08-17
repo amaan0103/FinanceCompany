@@ -1,19 +1,27 @@
 package com.java.entities;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
+import jakarta.json.bind.annotation.JsonbDateFormat;
+
 public class Customer {
 	private int customerId;
 	private String customerName;
 	private String gender;
-	private String contact;
+	private String email;
+	private String mobile;
 	
-	public Customer() {}
-
-	public Customer(int customerId, String customerName, String gender, String contact) {
+	public Customer(int customerId, String customerName, String gender, String email, String mobile) {
 		this.customerId = customerId;
 		this.customerName = customerName;
 		this.gender = gender;
-		this.contact = contact;
+		this.email = email;
+		this.mobile = mobile;
 	}
+
+
+	public Customer() {}
 
 	public int getCustomerId() {
 		return customerId;
@@ -39,13 +47,22 @@ public class Customer {
 		this.gender = gender;
 	}
 
-	public String getContact() {
-		return contact;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setContact(String contact) {
-		this.contact = contact;
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
 	
 	
 }

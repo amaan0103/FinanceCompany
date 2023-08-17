@@ -7,12 +7,14 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import com.java.dataaccess.contracts.LoanApplicationContract;
+import com.java.entities.FullApplication;
 import com.java.entities.LoanApplication;
 
 public class LoanApplicationDataAccess implements LoanApplicationContract {
@@ -76,16 +78,16 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 	}
 
 	@Override
-	public List<LoanApplication> getAllApplications() throws Exception {
+	public List<FullApplication> getAllApplications() throws Exception {
 		// TODO Auto-generated method stub
 		
-		LoanApplication app = null;
-		List<LoanApplication> apps = new ArrayList<>();
+		FullApplication app = null;
+		List<FullApplication> apps = new ArrayList<>();
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("get_all_apps"));
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
-				app = new LoanApplication();
+				app = new FullApplication();
 				app.setApplicationNumber(resultSet.getInt(1));
 				app.setCustomerId(resultSet.getInt(2));
 				app.setLoanId(resultSet.getInt(3));
@@ -94,6 +96,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 				app.setLoanEmi(resultSet.getDouble(6));
 				app.setApplyDate(resultSet.getDate(7));
 				app.setLoanStatus(resultSet.getString(8));
+				app.setDocuments(resultSet.getBlob(10));
 				apps.add(app);
 			}
 		}catch(Exception e) {
@@ -103,15 +106,18 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 	}
 
 	@Override
-	public List<LoanApplication> getApplications(int customer_id) throws Exception {
+	public List<FullApplication> getApplicationsById(int customer_id) throws Exception {
 		// TODO Auto-generated method stub
-		LoanApplication app = null;
-		List<LoanApplication> apps = new ArrayList<>();
+		FullApplication app = null;
+		List<FullApplication> apps = new ArrayList<>();
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("get_all_apps_by_id"));
+			statement.setInt(1, customer_id);
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
-				app = new LoanApplication();
+				ResultSetMetaData rsmd = resultSet.getMetaData();
+				System.out.println(rsmd.getColumnCount());
+				app = new FullApplication();
 				app.setApplicationNumber(resultSet.getInt(1));
 				app.setCustomerId(resultSet.getInt(2));
 				app.setLoanId(resultSet.getInt(3));
@@ -120,6 +126,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 				app.setLoanEmi(resultSet.getDouble(6));
 				app.setApplyDate(resultSet.getDate(7));
 				app.setLoanStatus(resultSet.getString(8));
+				app.setDocuments(resultSet.getBlob(10));
 				apps.add(app);
 			}
 		}catch(Exception e) {

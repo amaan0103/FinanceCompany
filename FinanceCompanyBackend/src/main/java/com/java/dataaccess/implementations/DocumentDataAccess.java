@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.java.dataaccess.contracts.DocumentContract;
@@ -74,5 +76,41 @@ public class DocumentDataAccess implements DocumentContract{
 			throw e;
 		}
 		return result==0?false:true;
+	}
+	@Override
+	public List<Documents> getAllDocuments() throws Exception {
+		Documents doc = null;
+		List<Documents> docs = new ArrayList<>();
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("get_all_docs"));
+			resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				doc = new Documents();
+				doc.setApplicationNumber(resultSet.getInt(1));
+				doc.setDocuments(resultSet.getBlob(2));
+				docs.add(doc);
+			}
+		}catch(Exception e) {
+			throw e;
+		}
+		return docs;
+	}
+	@Override
+	public Documents getDocumentById(int application_number) throws Exception {
+		// TODO Auto-generated method stub
+		Documents doc = null;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("get_docs_by_id"));
+			statement.setInt(1, application_number);
+			resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				doc = new Documents();
+				doc.setApplicationNumber(resultSet.getInt(1));
+				doc.setDocuments(resultSet.getBlob(2));
+			}
+		}catch(Exception e) {
+			throw e;
+		}
+		return doc;
 	}
 }
