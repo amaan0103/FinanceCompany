@@ -8,10 +8,13 @@ import com.java.businesslayer.implementations.ClerkComponent;
 import com.java.container.Injector;
 import com.java.dataaccess.contracts.CustomerContract;
 import com.java.dataaccess.contracts.LoanApplicationContract;
+import com.java.dataaccess.contracts.LoanContract;
 import com.java.dataaccess.implementations.CustomerDataAccess;
 import com.java.dataaccess.implementations.LoanApplicationDataAccess;
+import com.java.dataaccess.implementations.LoanDataAccess;
 import com.java.entities.Customer;
 import com.java.entities.FullApplication;
+import com.java.entities.Loan;
 import com.java.entities.LoanApplication;
 import com.java.entities.ServiceResponse;
 
@@ -92,6 +95,20 @@ public class ClerkService {
 		return new ServiceResponse<List<FullApplication>>("records found",200,list);
 		} catch (Exception e) {
 			return new ServiceResponse<List<FullApplication>>(e.getMessage(), 400, null);
+		}
+	}
+	
+	@POST
+	@Path("/addLoan")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ServiceResponse<Loan> addLoan(Loan loan) throws Exception{
+		try {
+		ClerkComponent<LoanContract,LoanDataAccess> cc = new ClerkComponent<>(new LoanDataAccess());
+		boolean flag = cc.addLoan(loan);
+		return new ServiceResponse<Loan>("added",200,loan);
+		}catch(Exception e) {
+			return new ServiceResponse<Loan>(e.getMessage(),400,null);
 		}
 	}
 }

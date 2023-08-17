@@ -12,4 +12,5 @@ public interface ClerkBusinessContract {
 	List<Customer> getAllCustomers() throws Exception;
 	boolean addApplication(FullApplication app) throws Exception;
 	List<FullApplication> getAllApplications() throws Exception;
+	boolean addLoan(Loan loan) throws Exception;
 }
