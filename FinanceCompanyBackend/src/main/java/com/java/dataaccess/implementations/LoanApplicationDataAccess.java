@@ -7,7 +7,6 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,8 +114,6 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 			statement.setInt(1, customer_id);
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
-				ResultSetMetaData rsmd = resultSet.getMetaData();
-				System.out.println(rsmd.getColumnCount());
 				app = new FullApplication();
 				app.setApplicationNumber(resultSet.getInt(1));
 				app.setCustomerId(resultSet.getInt(2));
