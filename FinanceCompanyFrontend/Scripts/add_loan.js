@@ -11,7 +11,7 @@ function set_interest() {
         case "personal":
             interest = 15;
             break;
-        case "others":
+        case "home":
             interest = 20;
             break;
         default:

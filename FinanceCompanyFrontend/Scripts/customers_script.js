@@ -1,13 +1,11 @@
 //AJAX => asynchronous JavaScript and XML
 //function to load data in Table body element
 function loadCustomerDetails(customers) {
-    
     result = ""
     customers
         .forEach(
             (item) => {
-                result += "Customer ID : " + item.customerId + " Customer Name : " + item.customerName + "<br>"
-                
+                display_on_page(item.customerId, item.customerName, item.gender, item.mobile, item.email)
             }
         )
         this.document.getElementById("result").innerHTML = result
@@ -36,6 +34,12 @@ function getCustomers() {
     req.open('GET', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/getcustomers')
     req.send()
 }
+
+//function to display contents on the page
+function display_on_page(ID, name, gender, mobile, email) {
+    
+}
+
 /*
 const btnObject = document.getElementById('btnLoad')
 //if (btnObject !== undefined) {
