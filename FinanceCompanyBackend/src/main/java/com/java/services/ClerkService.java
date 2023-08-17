@@ -1,15 +1,15 @@
 package com.java.services;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 import java.util.List;
 
 import com.java.businesslayer.contracts.ClerkBusinessContract;
 import com.java.businesslayer.implementations.ClerkComponent;
 import com.java.container.Injector;
 import com.java.dataaccess.contracts.CustomerContract;
+import com.java.dataaccess.contracts.LoanApplicationContract;
 import com.java.dataaccess.implementations.CustomerDataAccess;
+import com.java.dataaccess.implementations.LoanApplicationDataAccess;
 import com.java.entities.Customer;
 import com.java.entities.LoanApplication;
 import com.java.entities.ServiceResponse;
@@ -67,11 +67,30 @@ public class ClerkService {
 		}
 	}
 	
-//	@POST
-//	@Path("/addCustomer")
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public ServiceResponse<LoanApplication> addApplication(LoanApplication app){
-//		return null;
-//	}
+	@POST
+	@Path("/submitApplication")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ServiceResponse<LoanApplication> submitApplication(LoanApplication app) throws Exception{
+		try {
+		ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
+		boolean flag = cc.addApplication(app);
+		return new ServiceResponse<LoanApplication>("added",200,app);
+		}catch(Exception e) {
+			return new ServiceResponse<LoanApplication>(e.getMessage(),400,null);
+		}
+	}
+	
+	@GET
+	@Path("/getApplications")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ServiceResponse<List<LoanApplication>> getApplications(){
+		try {
+			ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
+		List<LoanApplication> list = cc.getAllApplications();
+		return new ServiceResponse<List<LoanApplication>>("records found",200,list);
+		} catch (Exception e) {
+			return new ServiceResponse<List<LoanApplication>>(e.getMessage(), 400, null);
+		}
+	}
 }

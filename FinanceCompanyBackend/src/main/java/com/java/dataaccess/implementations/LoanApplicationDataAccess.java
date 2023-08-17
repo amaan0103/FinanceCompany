@@ -66,6 +66,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 			statement.setInt(5,app.getLoanTenure());
 			statement.setDouble(6,app.getLoanEmi());
 			statement.setDate(7,(Date) app.getApplyDate());
+			statement.setString(8, app.getLoanStatus());
 			result = statement.executeUpdate();
 			closeConnection();
 		}catch(Exception e) {
@@ -92,6 +93,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 				app.setLoanTenure(resultSet.getInt(5));
 				app.setLoanEmi(resultSet.getDouble(6));
 				app.setApplyDate(resultSet.getDate(7));
+				app.setLoanStatus(resultSet.getString(8));
 				apps.add(app);
 			}
 		}catch(Exception e) {
@@ -117,6 +119,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 				app.setLoanTenure(resultSet.getInt(5));
 				app.setLoanEmi(resultSet.getDouble(6));
 				app.setApplyDate(resultSet.getDate(7));
+				app.setLoanStatus(resultSet.getString(8));
 				apps.add(app);
 			}
 		}catch(Exception e) {

@@ -1,53 +1,63 @@
-/*
-var data = [{
-    "message":"record found",
-    "responseData":{
-        "customerId" : 1,
-        "customerName" : "Rahul",
-        "customerPhone" : 9949380094
-    },
-    "statusCode":200
-},
-{
-    "message":"record found",
-    "responseData":{
-        "customerId" : 2,
-        "customerName" : "Abhishek",
-        "customerPhone" : 8179173456
-    },
-    "statusCode":200
-}]
-*/
-
-async function get_all_customers() {
-    url = "http://localhost:8080/FinanceCompanyBackend/rest/clerk/getcustomers"
-    const req = new XMLHttpRequest()
-    await req.open('GET',url)
-    let data = await req.send();
-    req.responseType='json'
-    console.log('hehe'+data);
-    req.onload=()=>{
-        data = req.response
-        console.log(data)
-        return data
-    }
+//AJAX => asynchronous JavaScript and XML
+//function to load data in Table body element
+function loadCustomerDetails(customers) {
     
-    // return data
+    result = ""
+    customers
+        .forEach(
+            (item) => {
+                result += "Customer ID : " + item.customerId + " Customer Name : " + item.customerName + "<br>"
+                
+            }
+        )
+        this.document.getElementById("result").innerHTML = result
+}
+//function to load data in form element
+function displayData(productObject) {
+    document.getElementById('spanProduct').innerText = productObject.productName;
+    document.getElementById('txtName').value = productObject.productName;
+    document.getElementById('txtPrice').value = productObject.price.toString();
+    document.getElementById('txtDesc').value = productObject.description;
+    document.getElementById('txtId').value = productObject.productId.toString();
+    document.getElementById('txtCatId').value = productObject.categoryId.toString();
 }
 
+//function to get all the products
+function getCustomers() {
+    const req = new XMLHttpRequest()
+    req.onreadystatechange = () => {
+        if (req.status === 200 && req.readyState === 4) {
+            //console.log(req.responseText)
+            const serviceResponseObject = JSON.parse(req.responseText)
+            //console.log(serviceResponseObject)
+            loadCustomerDetails(serviceResponseObject.responseData)
+        }
+    }
+    req.open('GET', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/getcustomers')
+    req.send()
+}
+/*
+const btnObject = document.getElementById('btnLoad')
+//if (btnObject !== undefined) {
+if (btnObject) {
+    btnObject.addEventListener('click', getProductsData)
+}
+*/
+//code which will be executed immediately afetr DOM content creation is completed and the page is loaded in the browser
 window
     .addEventListener(
         'DOMContentLoaded',
-        async function () {  
-            console.log(1);
-            data = await get_all_customers()
-            console.log(data);
-            var result = ""
-            data.forEach(item => {
-                response = item.responseData
-                result += "Customer ID : " + response.customerId + " Customer Name : " + response.customerName + "<br>"
-            }
-            );
-            this.document.getElementById("result").innerHTML = result
+        function () {
+            getCustomers()
         }
     )
+
+
+
+
+
+
+
+
+
+

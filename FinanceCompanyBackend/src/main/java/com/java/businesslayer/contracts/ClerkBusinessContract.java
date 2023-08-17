@@ -11,5 +11,4 @@ public interface ClerkBusinessContract {
 	List<Customer> getAllCustomers() throws Exception;
 	boolean addApplication(LoanApplication app) throws Exception;
 	List<LoanApplication> getAllApplications() throws Exception;
-	List<Loan> getLoanDetails() throws Exception;
 }
