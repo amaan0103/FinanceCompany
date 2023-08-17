@@ -85,4 +85,18 @@ public class CustomerService {
 			return new ServiceResponse<List<FullApplication>>(e.getMessage(), 400, null);
 		}
 	}
+	
+	@GET
+	@Path("/getApplications/{customerId}/{sort}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ServiceResponse<List<FullApplication>> getApplications(@PathParam("customerId") int customerId, @PathParam("sort") int sort){
+		//sort: 1. sort by loan type 2. sort by apply_date 3. sort by tenure 4. sort by loan amount
+		try {
+			CustomerComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new CustomerComponent<>(new LoanApplicationDataAccess());
+		List<FullApplication> list = cc.getAllApplications(customerId,sort);
+		return new ServiceResponse<List<FullApplication>>("records found",200,list);
+		} catch (Exception e) {
+			return new ServiceResponse<List<FullApplication>>(e.getMessage(), 400, null);
+		}
+	}
 }

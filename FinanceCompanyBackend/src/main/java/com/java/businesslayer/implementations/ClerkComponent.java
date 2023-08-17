@@ -60,5 +60,23 @@ public class ClerkComponent<TContract,Timplementation> implements ClerkBusinessC
 		// TODO Auto-generated method stub
 		return ((LoanContract) dao).addLoan(loan);
 	}
+	
+	@Override
+	public List<FullApplication> getAllApplications(int sort) throws Exception {
+		// TODO Auto-generated method stub
+		List<FullApplication> list = ((LoanApplicationContract) dao).getAllApplications();
+		Collections.sort(list, new Comparator<FullApplication>() {
 
+			@Override
+			public int compare(FullApplication o1, FullApplication o2) {
+				// TODO Auto-generated method stub
+				if(sort==1)	return o1.getLoanId()-o2.getLoanId();
+				else if(sort==2)	return o1.getApplyDate().compareTo(o2.getApplyDate());
+				else if(sort==3)	return o1.getLoanTenure()-o2.getLoanTenure();
+				else	return (int) (o1.getLoanAmount()-o2.getLoanAmount());
+			}
+			
+		});
+		return list;
+	}
 }

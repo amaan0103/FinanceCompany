@@ -13,4 +13,5 @@ public interface CustomerBusinessContract {
 	List<Loan> getLoanDetails() throws Exception;
 	List<FullApplication> getAllApplications(int customer_id) throws Exception;
 	boolean deleteDocuments(int application_number) throws Exception;
+	List<FullApplication> getAllApplications(int customerId, int sort) throws Exception;
 }
