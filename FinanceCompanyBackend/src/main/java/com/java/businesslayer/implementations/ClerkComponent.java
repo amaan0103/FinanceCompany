@@ -13,6 +13,7 @@ import com.java.dataaccess.contracts.LoanApplicationContract;
 import com.java.entities.Customer;
 import com.java.entities.Documents;
 import com.java.entities.FullApplication;
+import com.java.entities.Loan;
 import com.java.entities.LoanApplication;
 
 public class ClerkComponent<TContract,Timplementation> implements ClerkBusinessContract {
@@ -52,27 +53,30 @@ public class ClerkComponent<TContract,Timplementation> implements ClerkBusinessC
 	public List<FullApplication> getAllApplications() throws Exception {
 		// TODO Auto-generated method stub
 		return  ((LoanApplicationContract) dao).getAllApplications();
-//		DocumentContract docdao = new DocumentDataAccess();
-//		List<Documents> docs = docdao.getAllDocuments();
-		
-//		Collections.sort(loanApplication, new Comparator<LoanApplication>() {
-//			@Override
-//			public int compare(LoanApplication o1, LoanApplication o2) {
-//				// TODO Auto-generated method stub
-//				return o1.getApplicationNumber()-o2.getApplicationNumber();
-//			}
-//		});
-//		
-//		Collections.sort(docs, new Comparator<Documents>() {
-//			@Override
-//			public int compare(Documents o1, Documents o2) {
-//				// TODO Auto-generated method stub
-//				return o1.getApplicationNumber()-o2.getApplicationNumber();
-//			}
-//		});
-//		
-//		List<FullApplication> ret = new ArrayList<>();
-//		return ret;
 	}
 
+	@Override
+	public boolean addLoan(Loan loan) throws Exception {
+		// TODO Auto-generated method stub
+		return ((LoanContract) dao).addLoan(loan);
+	}
+	
+	@Override
+	public List<FullApplication> getAllApplications(int sort) throws Exception {
+		// TODO Auto-generated method stub
+		List<FullApplication> list = ((LoanApplicationContract) dao).getAllApplications();
+		Collections.sort(list, new Comparator<FullApplication>() {
+
+			@Override
+			public int compare(FullApplication o1, FullApplication o2) {
+				// TODO Auto-generated method stub
+				if(sort==1)	return o1.getLoanId()-o2.getLoanId();
+				else if(sort==2)	return o1.getApplyDate().compareTo(o2.getApplyDate());
+				else if(sort==3)	return o1.getLoanTenure()-o2.getLoanTenure();
+				else	return (int) (o1.getLoanAmount()-o2.getLoanAmount());
+			}
+			
+		});
+		return list;
+	}
 }

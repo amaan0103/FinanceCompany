@@ -67,8 +67,8 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 			statement.setDouble(4,app.getLoanAmount());
 			statement.setInt(5,app.getLoanTenure());
 			statement.setDouble(6,app.getLoanEmi());
-			statement.setDate(7,(Date) app.getApplyDate());
-			statement.setString(8, app.getLoanStatus());
+//			statement.setDate(7,(Date) app.getApplyDate());
+			statement.setString(7, app.getLoanStatus());
 			result = statement.executeUpdate();
 			closeConnection();
 		}catch(Exception e) {

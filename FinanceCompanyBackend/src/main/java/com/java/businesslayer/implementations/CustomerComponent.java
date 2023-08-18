@@ -1,5 +1,7 @@
 package com.java.businesslayer.implementations;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.java.businesslayer.contracts.CustomerBusinessContract;
@@ -48,23 +50,41 @@ public class CustomerComponent<TContract, TImplementation> implements CustomerBu
 
 
 	@Override
-	public boolean cancelLoan(int application_number) throws Exception {
+	public boolean cancelLoan(int applicationNumber) throws Exception {
 		// TODO Auto-generated method stub
-		return ((LoanApplicationContract) dao).removeApplication(application_number);
+		return ((LoanApplicationContract) dao).removeApplication(applicationNumber);
 	}
 
 
 
 	@Override
-	public boolean deleteDocuments(int application_number) throws Exception {
+	public boolean deleteDocuments(int applicationNumber) throws Exception {
 		// TODO Auto-generated method stub
-		return ((DocumentContract) dao).removeDocuments(application_number);
+		return ((DocumentContract) dao).removeDocuments(applicationNumber);
 	}
 
 	@Override
-	public List<FullApplication> getAllApplications(int customer_id) throws Exception {
+	public List<FullApplication> getAllApplications(int customerId) throws Exception {
 		// TODO Auto-generated method stub
-		return  ((LoanApplicationContract) dao).getApplicationsById(customer_id);
+		return  ((LoanApplicationContract) dao).getApplicationsById(customerId);
 	}
+	
+	@Override
+	public List<FullApplication> getAllApplications(int customerId, int sort) throws Exception {
+		// TODO Auto-generated method stub
+		List<FullApplication> list = ((LoanApplicationContract) dao).getApplicationsById(customerId);
+		Collections.sort(list, new Comparator<FullApplication>() {
 
+			@Override
+			public int compare(FullApplication o1, FullApplication o2) {
+				// TODO Auto-generated method stub
+				if(sort==1)	return o1.getLoanId()-o2.getLoanId();
+				else if(sort==2)	return o1.getApplyDate().compareTo(o2.getApplyDate());
+				else if(sort==3)	return o1.getLoanTenure()-o2.getLoanTenure();
+				else	return (int) (o1.getLoanAmount()-o2.getLoanAmount());
+			}
+			
+		});
+		return list;
+	}
 }
