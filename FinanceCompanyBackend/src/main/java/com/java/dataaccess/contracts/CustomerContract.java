@@ -7,5 +7,5 @@ import com.java.entities.Customer;
 public interface CustomerContract{
 	boolean addCustomer(Customer customer) throws Exception ;
 	List<Customer> getAllCustomers() throws Exception;
-	boolean deleteCustomer(int customerId) throws Exception;
+	boolean deleteCustomer(long customerId) throws Exception;
 }

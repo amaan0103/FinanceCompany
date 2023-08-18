@@ -4,15 +4,20 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 import jakarta.json.bind.annotation.JsonbDateFormat;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 public class Customer {
-	private int customerId;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long customerId;
 	private String customerName;
 	private String gender;
 	private String email;
 	private String mobile;
 	
-	public Customer(int customerId, String customerName, String gender, String email, String mobile) {
+	public Customer(long customerId, String customerName, String gender, String email, String mobile) {
 		this.customerId = customerId;
 		this.customerName = customerName;
 		this.gender = gender;
@@ -23,11 +28,11 @@ public class Customer {
 
 	public Customer() {}
 
-	public int getCustomerId() {
+	public long getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(long customerId) {
 		this.customerId = customerId;
 	}
 

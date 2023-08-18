@@ -1,7 +1,9 @@
 package com.java.dataaccess.implementations;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -61,8 +63,8 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 		int result=0;
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("add_loan_app"));
-			statement.setInt(1,app.getApplicationNumber());
-			statement.setInt(2,app.getCustomerId());
+			statement.setLong(1,app.getApplicationNumber());
+			statement.setLong(2,app.getCustomerId());
 			statement.setInt(3,app.getLoanId());
 			statement.setDouble(4,app.getLoanAmount());
 			statement.setInt(5,app.getLoanTenure());
@@ -73,6 +75,8 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 			closeConnection();
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return result==0?false:true;
 	}
@@ -88,93 +92,115 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				app = new FullApplication();
-				app.setApplicationNumber(resultSet.getInt(1));
-				app.setCustomerId(resultSet.getInt(2));
+				app.setApplicationNumber(resultSet.getLong(1));
+				app.setCustomerId(resultSet.getLong(2));
 				app.setLoanId(resultSet.getInt(3));
 				app.setLoanAmount(resultSet.getDouble(4));
 				app.setLoanTenure(resultSet.getInt(5));
 				app.setLoanEmi(resultSet.getDouble(6));
 				app.setApplyDate(resultSet.getDate(7));
 				app.setLoanStatus(resultSet.getString(8));
-				app.setDocuments(resultSet.getBlob(10));
+				StringBuffer buf = new StringBuffer();
+				String temp = null;
+				BufferedReader reader = new BufferedReader(new InputStreamReader(resultSet.getBlob(10).getBinaryStream()));
+				while((temp = reader.readLine())!=null) {
+					buf.append(temp);
+				}
+				app.setDocuments(buf.toString());
 				apps.add(app);
 			}
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return apps;
 	}
 
 	@Override
-	public List<FullApplication> getApplicationsById(int customer_id) throws Exception {
+	public List<FullApplication> getApplicationsById(long customer_id) throws Exception {
 		// TODO Auto-generated method stub
 		FullApplication app = null;
 		List<FullApplication> apps = new ArrayList<>();
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("get_all_apps_by_id"));
-			statement.setInt(1, customer_id);
+			statement.setLong(1, customer_id);
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				ResultSetMetaData rsmd = resultSet.getMetaData();
 				System.out.println(rsmd.getColumnCount());
 				app = new FullApplication();
-				app.setApplicationNumber(resultSet.getInt(1));
-				app.setCustomerId(resultSet.getInt(2));
+				app.setApplicationNumber(resultSet.getLong(1));
+				app.setCustomerId(resultSet.getLong(2));
 				app.setLoanId(resultSet.getInt(3));
 				app.setLoanAmount(resultSet.getDouble(4));
 				app.setLoanTenure(resultSet.getInt(5));
 				app.setLoanEmi(resultSet.getDouble(6));
 				app.setApplyDate(resultSet.getDate(7));
 				app.setLoanStatus(resultSet.getString(8));
-				app.setDocuments(resultSet.getBlob(10));
+				StringBuffer buf = new StringBuffer();
+				String temp = null;
+				BufferedReader reader = new BufferedReader(new InputStreamReader(resultSet.getBlob(10).getBinaryStream()));
+				while((temp = reader.readLine())!=null) {
+					buf.append(temp);
+				}
+				app.setDocuments(buf.toString());
 				apps.add(app);
 			}
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return apps;
 	}
 
 	@Override
-	public boolean removeApplication(int application_number) throws Exception {
+	public boolean removeApplication(long application_number) throws Exception {
 		// TODO Auto-generated method stub
 		int result=0;
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("delete_app"));
-			statement.setInt(1, application_number);
+			statement.setLong(1, application_number);
 			result = statement.executeUpdate();
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return result==0?false:true;
 	}
 
 	@Override
-	public boolean approve(int application_number) throws Exception {
+	public boolean approve(long application_number) throws Exception {
 		// TODO Auto-generated method stub
 		int result=0;
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("approve_app"));
-			statement.setInt(1,application_number);
+			statement.setLong(1,application_number);
 			result = statement.executeUpdate();
 			closeConnection();
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return result==0?false:true;
 	}
 
 	@Override
-	public boolean reject(int application_number) throws Exception {
+	public boolean reject(long application_number) throws Exception {
 		// TODO Auto-generated method stub
 		int result=0;
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("reject_app"));
-			statement.setInt(1,application_number);
+			statement.setLong(1,application_number);
 			result = statement.executeUpdate();
 			closeConnection();
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return result==0?false:true;
 	}

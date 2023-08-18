@@ -51,8 +51,9 @@ public class CustomerDataAccess implements CustomerContract{
 		// TODO Auto-generated method stub
 		int result=0;
 		try {
+			customer.setCustomerId(System.currentTimeMillis());
 			statement = connectionInstance.prepareStatement(properties.getProperty("add_customer"));
-			statement.setInt(1, customer.getCustomerId());
+			statement.setLong(1, customer.getCustomerId());
 			statement.setString(2, customer.getCustomerName());
 			statement.setString(3,customer.getGender());
 			statement.setString(4,customer.getMobile());
@@ -76,7 +77,7 @@ public class CustomerDataAccess implements CustomerContract{
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				customer = new Customer();
-				customer.setCustomerId(resultSet.getInt(1));
+				customer.setCustomerId(resultSet.getLong(1));
 				customer.setCustomerName(resultSet.getString(2));
 				customer.setGender(resultSet.getString(3));
 				customer.setMobile(resultSet.getString(4));
@@ -92,12 +93,12 @@ public class CustomerDataAccess implements CustomerContract{
 		return customers;
 	}
 	@Override
-	public boolean deleteCustomer(int customerId) throws Exception {
+	public boolean deleteCustomer(long customerId) throws Exception {
 		// TODO Auto-generated method stub
 		int result=0;
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("delete_customer"));
-			statement.setInt(1, customerId);
+			statement.setLong(1, customerId);
 			result = statement.executeUpdate();
 			
 		}catch(Exception e) {

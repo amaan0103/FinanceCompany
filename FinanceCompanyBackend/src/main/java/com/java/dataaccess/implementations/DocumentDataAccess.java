@@ -1,13 +1,17 @@
 package com.java.dataaccess.implementations;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Properties;
 
@@ -44,6 +48,8 @@ public class DocumentDataAccess implements DocumentContract{
 			throw e;
 		} catch (Exception ex) {
 			throw ex;
+		}finally {
+			closeConnection();
 		}
 	}
 	private void closeConnection() throws SQLException {
@@ -55,25 +61,32 @@ public class DocumentDataAccess implements DocumentContract{
 		int result=0;
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("add_docs"));
-			statement.setInt(1, docs.getApplicationNumber());
-			statement.setBlob(2, docs.getDocuments());
+			statement.setLong(1, docs.getApplicationNumber());
+			
+			Blob blob = connectionInstance.createBlob();
+			blob.setBytes(1, docs.getDocuments().getBytes());
+			statement.setBlob(2, blob);
 			result = statement.executeUpdate();
 			closeConnection();
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return result==0?false:true;
 	}
 	@Override
-	public boolean removeDocuments(int application_number) throws Exception {
+	public boolean removeDocuments(long application_number) throws Exception {
 		// TODO Auto-generated method stub
 		int result=0;
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("delete_docs"));
-			statement.setInt(1, application_number);
+			statement.setLong(1, application_number);
 			result = statement.executeUpdate();
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return result==0?false:true;
 	}
@@ -86,30 +99,46 @@ public class DocumentDataAccess implements DocumentContract{
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				doc = new Documents();
-				doc.setApplicationNumber(resultSet.getInt(1));
-				doc.setDocuments(resultSet.getBlob(2));
+				doc.setApplicationNumber(resultSet.getLong(1));
+				StringBuffer buf = new StringBuffer();
+				String temp = null;
+				BufferedReader reader = new BufferedReader(new InputStreamReader(resultSet.getBlob(2).getBinaryStream()));
+				while((temp = reader.readLine())!=null) {
+					buf.append(temp);
+				}
+				doc.setDocuments(buf.toString());
 				docs.add(doc);
 			}
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return docs;
 	}
 	@Override
-	public Documents getDocumentById(int application_number) throws Exception {
+	public Documents getDocumentById(long application_number) throws Exception {
 		// TODO Auto-generated method stub
 		Documents doc = null;
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("get_docs_by_id"));
-			statement.setInt(1, application_number);
+			statement.setLong(1, application_number);
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				doc = new Documents();
 				doc.setApplicationNumber(resultSet.getInt(1));
-				doc.setDocuments(resultSet.getBlob(2));
+				StringBuffer buf = new StringBuffer();
+				String temp = null;
+				BufferedReader reader = new BufferedReader(new InputStreamReader(resultSet.getBlob(2).getBinaryStream()));
+				while((temp = reader.readLine())!=null) {
+					buf.append(temp);
+				}
+				doc.setDocuments(buf.toString());
 			}
 		}catch(Exception e) {
 			throw e;
+		}finally {
+			closeConnection();
 		}
 		return doc;
 	}

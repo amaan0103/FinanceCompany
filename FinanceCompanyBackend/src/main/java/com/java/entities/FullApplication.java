@@ -4,20 +4,20 @@ import java.sql.Blob;
 import java.util.Date;
 
 public class FullApplication {
-	private int applicationNumber;
-	private int customerId;
+	private long applicationNumber;
+	private long customerId;
 	private int loanId;
 	private double loanAmount;
 	private String loanStatus;
 	private Date applyDate;
 	private int loanTenure;
 	private double loanEmi;
-	private Blob documents;
+	private String documents;
 	
 	public FullApplication() {}
 
-	public FullApplication(int applicationNumber, int customerId, int loanId, double loanAmount, String loanStatus,
-			Date applyDate, int loanTenure, double loanEmi, Blob documents) {
+	public FullApplication(long applicationNumber, long customerId, int loanId, double loanAmount, String loanStatus,
+			Date applyDate, int loanTenure, double loanEmi, String documents) {
 		this.applicationNumber = applicationNumber;
 		this.customerId = customerId;
 		this.loanId = loanId;
@@ -29,19 +29,19 @@ public class FullApplication {
 		this.documents = documents;
 	}
 
-	public int getApplicationNumber() {
+	public long getApplicationNumber() {
 		return applicationNumber;
 	}
 
-	public void setApplicationNumber(int applicationNumber) {
+	public void setApplicationNumber(long applicationNumber) {
 		this.applicationNumber = applicationNumber;
 	}
 
-	public int getCustomerId() {
+	public long getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(long customerId) {
 		this.customerId = customerId;
 	}
 
@@ -93,11 +93,11 @@ public class FullApplication {
 		this.loanEmi = loanEmi;
 	}
 
-	public Blob getDocuments() {
+	public String getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(Blob documents) {
+	public void setDocuments(String documents) {
 		this.documents = documents;
 	}
 	

@@ -3,8 +3,8 @@ package com.java.entities;
 import java.util.Date;
 
 public class LoanApplication {
-	private int applicationNumber;
-	private int customerId;
+	private long applicationNumber;
+	private long customerId;
 	private int loanId;
 	private double loanAmount;
 	private String loanStatus;
@@ -14,7 +14,7 @@ public class LoanApplication {
 	
 	public LoanApplication() {}
 
-	public LoanApplication(int applicationNumber, int customerId, int loanId, double loanAmount, String loanStatus,
+	public LoanApplication(long applicationNumber, long customerId, int loanId, double loanAmount, String loanStatus,
 			Date applyDate, int loanTenure, double loanEmi) {
 		this.applicationNumber = applicationNumber;
 		this.customerId = customerId;
@@ -26,19 +26,19 @@ public class LoanApplication {
 		this.loanEmi = loanEmi;
 	}
 
-	public int getApplicationNumber() {
+	public long getApplicationNumber() {
 		return applicationNumber;
 	}
 
-	public void setApplicationNumber(int applicationNumber) {
+	public void setApplicationNumber(long applicationNumber) {
 		this.applicationNumber = applicationNumber;
 	}
 
-	public int getCustomerId() {
+	public long getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(long customerId) {
 		this.customerId = customerId;
 	}
 

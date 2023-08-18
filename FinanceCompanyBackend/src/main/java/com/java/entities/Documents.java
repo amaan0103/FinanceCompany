@@ -3,29 +3,29 @@ package com.java.entities;
 import java.sql.Blob;
 
 public class Documents {
-	private int applicationNumber;
-	private Blob documents;
+	private long applicationNumber;
+	private String documents;
 	
 	public Documents() {}
 
-	public Documents(int applicationNumber, Blob documents) {
+	public Documents(long applicationNumber, String documents) {
 		this.applicationNumber = applicationNumber;
 		this.documents = documents;
 	}
 
-	public int getApplicationNumber() {
+	public long getApplicationNumber() {
 		return applicationNumber;
 	}
 
-	public void setApplicationNumber(int applicationNumber) {
+	public void setApplicationNumber(long applicationNumber) {
 		this.applicationNumber = applicationNumber;
 	}
 
-	public Blob getDocuments() {
+	public String getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(Blob documents) {
+	public void setDocuments(String documents) {
 		this.documents = documents;
 	}
 }

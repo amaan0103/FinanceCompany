@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.java.businesslayer.contracts.ClerkBusinessContract;
 import com.java.businesslayer.implementations.ClerkComponent;
-import com.java.container.Injector;
 import com.java.dataaccess.contracts.CustomerContract;
 import com.java.dataaccess.contracts.LoanApplicationContract;
 import com.java.dataaccess.contracts.LoanContract;
@@ -29,23 +28,8 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/clerk")
 public class ClerkService {
 	
-//	Injector injector;
-//	CustomerContract dataAccessObject;
-//	ClerkBusinessContract businessObject;
-	
 	public ClerkService() throws Exception {
-//		injector = Injector.getInjector();
-//		try {
-//			dataAccessObject = injector.createInstance(CustomerContract.class);
-//			businessObject = injector.createInstance(ClerkComponent.class, businessObject, CustomerContract.class);
-//			
-//		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-//				| NoSuchMethodException | SecurityException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
-//	
 	
 	@POST
 	@Path("/addCustomer")
