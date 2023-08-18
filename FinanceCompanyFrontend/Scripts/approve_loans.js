@@ -1,34 +1,43 @@
 //AJAX => asynchronous JavaScript and XML
 //function to load data in Table body element
-function loadCustomerDetails(customers) {
+//"applicationNumber":1,"applyDate":"2020-09-04Z","customerId":1,"loanAmount":1000.0,"loanEmi":5670.0,"loanId":1,"loanStatus":"pending","loanTenure":5
+function loadCustomerDetails(loan_applications) {
     tblBody = document.getElementById("tableId")
-    customers
+    loan_applications
         .forEach(
             (c) => {
                 const row = document.createElement("tr")
                 // change the style
                 //row.classList.add("table-light")
                 row.className = "table-light"
-                const id = document.createElement("th")
-                id.scope = "row"
-                // data needs to be updated
-                const name = document.createElement("td")
-                const gender = document.createElement("td")
-                const phoneno = document.createElement("td")
-                const email = document.createElement("td")
+                const application_number = document.createElement("th")
+                const apply_date = document.createElement("td")
+                const customer_id = document.createElement("td")
+                const loan_amount = document.createElement("td")
+                const loan_emi = document.createElement("td")
+                const loan_id = document.createElement("td")
+                const loan_status = document.createElement("td")
+                const loan_tenure = document.createElement("td")
             
-                id.textContent = c.customerId;
-                name.textContent = c.customerName;
-                gender.textContent = c.gender;
-                phoneno.textContent = c.mobile;
-                email.textContent = c.email;
+                application_number.textContent = c.applicationNumber
+                apply_date.textContent = c.applyDate;
+                customer_id.textContent = c.customerId;
+                loan_amount.textContent = c.loanAmount;
+                loan_emi.textContent = c.loanEmi;
+                loan_id.textContent = c.loanId;
+                loan_status.textContent = c.loanStatus;
+                loan_tenure.textContent = c.loanTenure;
                 
-                row.appendChild(id)
-                row.appendChild(name)
-                row.appendChild(gender)
-                row.appendChild(phoneno)
-                row.appendChild(email)
-
+                row.appendChild(application_number)
+                row.appendChild(customer_id)
+                row.appendChild(loan_id)
+                row.appendChild(apply_date)
+                row.appendChild(loan_amount)
+                row.appendChild(loan_tenure)
+                row.appendChild(loan_emi)
+                row.appendChild(loan_status)    
+                
+                row.classList.add("table-light")
                 tblBody.appendChild(row)
             }
         )
