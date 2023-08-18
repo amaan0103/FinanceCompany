@@ -1,14 +1,34 @@
 //AJAX => asynchronous JavaScript and XML
 //function to load data in Table body element
 function loadCustomerDetails(customers) {
-    result = ""
+    tblBody = document.getElementById("tableId")
     customers
         .forEach(
-            (item) => {
-                display_on_page(item.customerId, item.customerName, item.gender, item.mobile, item.email)
+            (c) => {
+                const row = document.createElement("tr")
+                // change the style
+                row.classList.add("table-light")
+                const id = document.createElement("td")
+                const name = document.createElement("td")
+                const gender = document.createElement("td")
+                const phoneno = document.createElement("td")
+                const email = document.createElement("td")
+            
+                id.textContent = c.customerId;
+                name.textContent = c.customerName;
+                gender.textContent = c.gender;
+                phoneno.textContent = c.mobile;
+                email.textContent = c.email;
+                
+                
+                row.appendChild(id)
+                row.appendChild(name)
+                row.appendChild(gender)
+                row.appendChild(phoneno)
+                row.appendChild(email)
+                tblBody.appendChild(row)
             }
         )
-        this.document.getElementById("result").innerHTML = result
 }
 //function to load data in form element
 function displayData(productObject) {
@@ -37,7 +57,7 @@ function getCustomers() {
 
 //function to display contents on the page
 function display_on_page(ID, name, gender, mobile, email) {
-    
+
 }
 
 /*
