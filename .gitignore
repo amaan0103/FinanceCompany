@@ -1,2 +1,8 @@
 /.metadata/
 /FinanceCompanyBackend/src/main/webapp/WEB-INF/lib
+FinanceCompanyBackend/src/main/java/com/java/dataaccess/implementations/CustomerDataAccess.java
+FinanceCompanyBackend/src/main/java/com/java/dataaccess/implementations/DocumentDataAccess.java
+FinanceCompanyBackend/src/main/java/com/java/dataaccess/implementations/LoanApplicationDataAccess.java
+FinanceCompanyBackend/src/main/java/com/java/dataaccess/implementations/LoanDataAccess.java
+Servers/.settings/org.eclipse.wst.server.core.prefs
+FinanceCompanyBackend/.classpath

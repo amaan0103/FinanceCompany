@@ -22,7 +22,7 @@ public class DocumentDataAccess implements DocumentContract{
 	Properties properties;
 	public DocumentDataAccess() throws SQLException, IOException, ClassNotFoundException {
 		try {
-			reader = new FileReader("C:\\FinanceCompany\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
+			reader = new FileReader("C:\\Users\\Mourya\\Documents\\GitHub\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
 			properties = new Properties();
 			properties.load(reader);
 			Class.forName(properties.getProperty("driver"));
