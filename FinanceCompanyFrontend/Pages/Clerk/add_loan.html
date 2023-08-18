@@ -20,7 +20,7 @@
         <h2>Loan Application Form</h2>
         <h6>LOAN DETAILS</h6>
 
-        <form action="">
+        <form action="" onsubmit="upload_loan_data()">
             <div class="form-group mt-4 m-5">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="customer_id" placeholder="Customer ID">
@@ -53,9 +53,13 @@
                         oninput="calculate_emi()">
                     <label for="floatingInput">Loan Tenure</label>
                 </div>
-                <div class="form-floating mb-3">
+                <div class="form-floating">
                     <input type="number" class="form-control" id="loan_emi" placeholder="EMI" disabled>
                     <label for="floatingInput">EMI</label>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="document" class="form-label mt-4">Upload the Document</label>
+                    <input class="form-control" type="file" id="document">
                 </div>
                 <div class="form-floating mb-3" style="text-align: center;">
                     <button type="submit" class="btn btn-outline-dark btn-lg">Submit</button>

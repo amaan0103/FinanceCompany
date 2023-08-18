@@ -6,3 +6,4 @@ FinanceCompanyBackend/src/main/java/com/java/dataaccess/implementations/LoanAppl
 FinanceCompanyBackend/src/main/java/com/java/dataaccess/implementations/LoanDataAccess.java
 Servers/.settings/org.eclipse.wst.server.core.prefs
 FinanceCompanyBackend/.classpath
+FinanceCompanyBackend/.project

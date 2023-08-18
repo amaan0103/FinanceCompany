@@ -7,8 +7,10 @@ function loadCustomerDetails(customers) {
             (c) => {
                 const row = document.createElement("tr")
                 // change the style
-                row.classList.add("table-light")
-                const id = document.createElement("td")
+                //row.classList.add("table-light")
+                row.className = "table-light"
+                const id = document.createElement("th")
+                id.scope = "row"
                 const name = document.createElement("td")
                 const gender = document.createElement("td")
                 const phoneno = document.createElement("td")
@@ -20,12 +22,12 @@ function loadCustomerDetails(customers) {
                 phoneno.textContent = c.mobile;
                 email.textContent = c.email;
                 
-                
                 row.appendChild(id)
                 row.appendChild(name)
                 row.appendChild(gender)
                 row.appendChild(phoneno)
                 row.appendChild(email)
+
                 tblBody.appendChild(row)
             }
         )
