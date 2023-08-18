@@ -66,7 +66,14 @@ function upload_loan_data() {
 
     console.log(customer_id, loan_type, interest, doa, loan_tenure, loan_amount, loan_emi, document)
     data = {
-        
+        "applicationNumber" : 1,
+        "customerId" : customer_id,
+        "loanType" : loan_type,
+        "loanAmount" : loan_amount,
+        "loanStatus" : "pending",
+        "applyDate" : doa,
+        "loanTenure" : loan_tenure,
+        "loanEmi" : loan_emi
     }
 
     const req = new XMLHttpRequest();

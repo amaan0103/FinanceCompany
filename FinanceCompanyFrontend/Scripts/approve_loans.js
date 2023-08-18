@@ -11,6 +11,7 @@ function loadCustomerDetails(customers) {
                 row.className = "table-light"
                 const id = document.createElement("th")
                 id.scope = "row"
+                // data needs to be updated
                 const name = document.createElement("td")
                 const gender = document.createElement("td")
                 const phoneno = document.createElement("td")
@@ -34,7 +35,7 @@ function loadCustomerDetails(customers) {
 }
 
 //function to get all the products
-function getCustomers() {
+function getApplications() {
     const req = new XMLHttpRequest()
     req.onreadystatechange = () => {
         if (req.status === 200 && req.readyState === 4) {
@@ -44,7 +45,7 @@ function getCustomers() {
             loadCustomerDetails(serviceResponseObject.responseData)
         }
     }
-    req.open('GET', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/getcustomers')
+    req.open('GET', 'http://localhost:8080/FinanceCompanyBackend/rest/manager/getApplications')
     req.send()
 }
 
@@ -53,19 +54,12 @@ function display_on_page(ID, name, gender, mobile, email) {
 
 }
 
-/*
-const btnObject = document.getElementById('btnLoad')
-//if (btnObject !== undefined) {
-if (btnObject) {
-    btnObject.addEventListener('click', getProductsData)
-}
-*/
 //code which will be executed immediately afetr DOM content creation is completed and the page is loaded in the browser
 window
     .addEventListener(
         'DOMContentLoaded',
         function () {
-            getCustomers()
+            getApplications()
         }
     )
 
