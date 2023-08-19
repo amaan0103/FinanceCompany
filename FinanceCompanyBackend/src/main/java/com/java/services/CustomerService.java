@@ -2,8 +2,9 @@ package com.java.services;
 
 import java.util.List;
 
-import com.java.businesslayer.implementations.ClerkComponent;
-import com.java.businesslayer.implementations.CustomerComponent;
+import com.java.businesslayer.implementations.DocumentComponent;
+import com.java.businesslayer.implementations.LoanApplicationComponent;
+import com.java.businesslayer.implementations.LoanComponent;
 import com.java.dataaccess.contracts.DocumentContract;
 import com.java.dataaccess.contracts.LoanApplicationContract;
 import com.java.dataaccess.contracts.LoanContract;
@@ -37,8 +38,9 @@ public class CustomerService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ServiceResponse<FullApplication> submitApplication(FullApplication app) throws Exception{
 		try {
-		CustomerComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new CustomerComponent<>(new LoanApplicationDataAccess());
-		cc.addApplication(app);
+//		CustomerComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new CustomerComponent<>(new LoanApplicationDataAccess());
+			LoanApplicationComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new LoanApplicationComponent<>(new LoanApplicationDataAccess());
+			cc.addApplication(app);
 		return new ServiceResponse<FullApplication>("added",200,app);
 		}catch(Exception e) {
 			return new ServiceResponse<FullApplication>(e.getMessage(),400,null);
@@ -50,8 +52,9 @@ public class CustomerService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ServiceResponse<List<Loan>> getAllLoans(){
 		try {
-		CustomerComponent<LoanContract,LoanDataAccess> cc = new CustomerComponent<>( new LoanDataAccess());
-		List<Loan> list = cc.getLoanDetails();
+//		CustomerComponent<LoanContract,LoanDataAccess> cc = new CustomerComponent<>( new LoanDataAccess());
+			LoanComponent<LoanContract,LoanDataAccess> cc = new LoanComponent<>(new LoanDataAccess());
+			List<Loan> list = cc.getLoanDetails();
 		return new ServiceResponse<List<Loan>>("records found",200,list);
 		} catch (Exception e) {
 			return new ServiceResponse<List<Loan>>(e.getMessage(), 400, null);
@@ -61,11 +64,13 @@ public class CustomerService {
 	@DELETE
 	@Path("/deleteApplication/{applicationNumber}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ServiceResponse<LoanApplication> deleteApplication(@PathParam("applicationNumber") int applicationNumber){
+	public ServiceResponse<LoanApplication> deleteApplication(@PathParam("applicationNumber") long applicationNumber){
 		try {
-			CustomerComponent<DocumentContract,DocumentDataAccess> dd = new CustomerComponent<>(new DocumentDataAccess());
+//			CustomerComponent<DocumentContract,DocumentDataAccess> dd = new CustomerComponent<>(new DocumentDataAccess());
+			DocumentComponent<DocumentContract,DocumentDataAccess> dd = new DocumentComponent<>(new DocumentDataAccess());
 			dd.deleteDocuments(applicationNumber);
-			CustomerComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new CustomerComponent<>(new LoanApplicationDataAccess());
+//			CustomerComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new CustomerComponent<>(new LoanApplicationDataAccess());
+			LoanApplicationComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new LoanApplicationComponent<>(new LoanApplicationDataAccess());
 			cc.cancelLoan(applicationNumber);
 			return new ServiceResponse<LoanApplication>("deleted",200,null);
 			}catch(Exception e) {
@@ -74,12 +79,13 @@ public class CustomerService {
 	}
 	
 	@GET
-	@Path("/getApplications/{customerId}")
+	@Path("/getApplicationsCustomer/{customerId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ServiceResponse<List<FullApplication>> getApplications(@PathParam("customerId") int customerId){
+	public ServiceResponse<List<FullApplication>> getApplications(@PathParam("customerId") long customerId){
 		try {
-			CustomerComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new CustomerComponent<>(new LoanApplicationDataAccess());
-		List<FullApplication> list = cc.getAllApplications(customerId);
+//			CustomerComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new CustomerComponent<>(new LoanApplicationDataAccess());
+			LoanApplicationComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new LoanApplicationComponent<>(new LoanApplicationDataAccess());
+			List<FullApplication> list = cc.getAllApplications(customerId);
 		return new ServiceResponse<List<FullApplication>>("records found",200,list);
 		} catch (Exception e) {
 			return new ServiceResponse<List<FullApplication>>(e.getMessage(), 400, null);
@@ -89,10 +95,11 @@ public class CustomerService {
 	@GET
 	@Path("/getApplications/{customerId}/{sort}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ServiceResponse<List<FullApplication>> getApplications(@PathParam("customerId") int customerId, @PathParam("sort") int sort){
+	public ServiceResponse<List<FullApplication>> getApplications(@PathParam("customerId") long customerId, @PathParam("sort") int sort){
 		//sort: 1. sort by loan type 2. sort by apply_date 3. sort by tenure 4. sort by loan amount
 		try {
-			CustomerComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new CustomerComponent<>(new LoanApplicationDataAccess());
+//			CustomerComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new CustomerComponent<>(new LoanApplicationDataAccess());
+			LoanApplicationComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new LoanApplicationComponent<>(new LoanApplicationDataAccess());
 		List<FullApplication> list = cc.getAllApplications(customerId,sort);
 		return new ServiceResponse<List<FullApplication>>("records found",200,list);
 		} catch (Exception e) {

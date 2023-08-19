@@ -1,10 +1,10 @@
 package com.java.services;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import com.java.businesslayer.contracts.ClerkBusinessContract;
-import com.java.businesslayer.implementations.ClerkComponent;
+import com.java.businesslayer.implementations.CustomersComponent;
+import com.java.businesslayer.implementations.LoanApplicationComponent;
+import com.java.businesslayer.implementations.LoanComponent;
 import com.java.dataaccess.contracts.CustomerContract;
 import com.java.dataaccess.contracts.LoanApplicationContract;
 import com.java.dataaccess.contracts.LoanContract;
@@ -36,7 +36,8 @@ public class ClerkService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ServiceResponse<Customer> addCustomer(Customer c) throws Exception{
-		ClerkComponent<CustomerContract,CustomerDataAccess> cc = new ClerkComponent<>( new CustomerDataAccess());
+//		ClerkComponent<CustomerContract,CustomerDataAccess> cc = new ClerkComponent<>( new CustomerDataAccess());
+		CustomersComponent<CustomerContract,CustomerDataAccess> cc = new CustomersComponent<>( new CustomerDataAccess());
 		boolean flag = cc.addCustomer(c);
 		if(flag)	return new ServiceResponse<Customer>("added",200,c);
 		
@@ -48,7 +49,8 @@ public class ClerkService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ServiceResponse<List<Customer>> getCustomers(){
 		try {
-		ClerkComponent<CustomerContract,CustomerDataAccess> cc = new ClerkComponent<>( new CustomerDataAccess());
+//		ClerkComponent<CustomerContract,CustomerDataAccess> cc = new ClerkComponent<>( new CustomerDataAccess());
+		CustomersComponent<CustomerContract,CustomerDataAccess> cc = new CustomersComponent<>( new CustomerDataAccess());
 		List<Customer> list = cc.getAllCustomers();
 		return new ServiceResponse<List<Customer>>("records found",200,list);
 		} catch (Exception e) {
@@ -62,7 +64,8 @@ public class ClerkService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ServiceResponse<FullApplication> submitApplication(FullApplication app) throws Exception{
 		try {
-		ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
+//		ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
+			LoanApplicationComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new LoanApplicationComponent<>(new LoanApplicationDataAccess());
 		boolean flag = cc.addApplication(app);
 		return new ServiceResponse<FullApplication>("added",200,app);
 		}catch(Exception e) {
@@ -75,9 +78,10 @@ public class ClerkService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ServiceResponse<List<FullApplication>> getApplications(){
 		try {
-			ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
-		List<FullApplication> list = cc.getAllApplications();
-		return new ServiceResponse<List<FullApplication>>("records found",200,list);
+//			ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
+			LoanApplicationComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new LoanApplicationComponent<>(new LoanApplicationDataAccess());
+			List<FullApplication> list = cc.getAllApplications();
+			return new ServiceResponse<List<FullApplication>>("records found",200,list);
 		} catch (Exception e) {
 			return new ServiceResponse<List<FullApplication>>(e.getMessage(), 400, null);
 		}
@@ -88,9 +92,10 @@ public class ClerkService {
 	public ServiceResponse<List<FullApplication>> getApplications(@PathParam("sort") int sort){
 		//sort: 1. sort by loan type 2. sort by apply_date 3. sort by tenure 4. sort by loan amount
 		try {
-			ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
-		List<FullApplication> list = cc.getAllApplications(sort);
-		return new ServiceResponse<List<FullApplication>>("records found",200,list);
+//			ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
+			LoanApplicationComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new LoanApplicationComponent<>(new LoanApplicationDataAccess());
+			List<FullApplication> list = cc.getAllApplicationsSorted(sort);
+			return new ServiceResponse<List<FullApplication>>("records found",200,list);
 		} catch (Exception e) {
 			return new ServiceResponse<List<FullApplication>>(e.getMessage(), 400, null);
 		}
@@ -102,8 +107,9 @@ public class ClerkService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ServiceResponse<Loan> addLoan(Loan loan) throws Exception{
 		try {
-		ClerkComponent<LoanContract,LoanDataAccess> cc = new ClerkComponent<>(new LoanDataAccess());
-		boolean flag = cc.addLoan(loan);
+//		ClerkComponent<LoanContract,LoanDataAccess> cc = new ClerkComponent<>(new LoanDataAccess());
+			LoanComponent<LoanContract,LoanDataAccess> cc = new LoanComponent<>(new LoanDataAccess());
+			boolean flag = cc.addLoan(loan);
 		return new ServiceResponse<Loan>("added",200,loan);
 		}catch(Exception e) {
 			return new ServiceResponse<Loan>(e.getMessage(),400,null);
