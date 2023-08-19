@@ -46,8 +46,8 @@ public class LoanApplication {
 		return loanId;
 	}
 
-	public void setLoanId(int loanId) {
-		this.loanId = loanId;
+	public void setLoanId(int l) {
+		this.loanId = l;
 	}
 
 	public double getLoanAmount() {

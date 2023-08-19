@@ -61,6 +61,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 	public boolean addApplication(LoanApplication app) throws Exception {
 		// TODO Auto-generated method stub
 		int result=0;
+		app.setApplicationNumber(System.currentTimeMillis());
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("add_loan_app"));
 			statement.setLong(1,app.getApplicationNumber());

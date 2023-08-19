@@ -19,7 +19,7 @@
         <h2>Registration Form</h2>
         <h6>CUSTOMER DETAILS</h6>
 
-        <form action="">
+        <form action="post">
             <div class="form-group mt-4 m-5">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="first_name" placeholder="First Name">
@@ -32,14 +32,10 @@
                 <div class="form-group mb-3">
                     <select class="form-select" id="gender">
                       <option selected disabled>Gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Others">Others</option>
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
+                      <option value="O">Others</option>
                     </select>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="dob">
-                    <label for="floatingInput">Date of birth</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="tel" class="form-control" id="mobile" placeholder="Mobile">
@@ -50,7 +46,7 @@
                     <label for="floatingInput">Email</label>
                 </div>
                 <div class="form-floating mb-3" style="text-align: center;">
-                    <button type="submit" class="btn btn-outline-dark btn-lg">Submit</button>
+                    <button type="submit" id="btnUpload" class="btn btn-outline-dark btn-lg">Submit</button>
                 </div>
             </div>
         </form>
