@@ -2,26 +2,34 @@
 //"applicationNumber":1,"applyDate":"2020-09-04Z","customerId":1,"loanAmount":1000.0,"loanEmi":5670.0,"loanId":1,"loanStatus":"pending","loanTenure":5
 
 function approve_loan(application_number) {
-    //need to finish
+    status_ = "approved"
+
+    const req = new XMLHttpRequest();
+    req.open('POST', `http://localhost:8080/FinanceCompanyBackend/rest/manager/status/${application_number}/${status_}`,true);
+    req.send();
+
+    alert(`Loan Application Number : ${application_number} is Approved!`)
 }
 
 function reject_loan(application_number) {
-    //need to finish
+    status_ = "rejected"
+
+    const req = new XMLHttpRequest();
+    req.open('POST', `http://localhost:8080/FinanceCompanyBackend/rest/manager/status/${application_number}/${status_}`,true);
+    req.send();
+
+    alert(`Loan Application Number : ${application_number} is Rejected!`)
 }
 
 const buttonPressed = e => {
-    console.log(pending_IDs)
-    applicationNumber = e.target.id 
-    if(e.target.textContent == "Approve"){
+    applicationNumber = e.target.id
+    if (e.target.textContent == "Approve" && confirm(`Do you want to Approve Application Number : ${applicationNumber} ?`)) {
         approve_loan(applicationNumber)
-    }else if(e.target.textContent == "Reject"){
+    } else if (e.target.textContent == "Reject" && confirm(`Do you want to Reject Application Number : ${applicationNumber} ?`)) {
         reject_loan(applicationNumber)
     }
-    console.log("end of function");
-    //endpoint - http://localhost:8080/FinanceCompanyBackend/rest/manager/status/{applicationNumber}/{status}
+    location.reload()
 }
-
-const pending_IDs = []
 
 function loadCustomerDetails(loan_applications) {
     tblBody = document.getElementById("tableId")
@@ -47,6 +55,20 @@ function loadCustomerDetails(loan_applications) {
                 imgEle.style.width = "200px";
                 imgEle.style.margin = "2px";
 
+                const approve_btn = document.createElement("button")
+                const reject_btn = document.createElement("button")
+
+                approve_btn.textContent = "Approve"
+                approve_btn.setAttribute("type", "button")
+                approve_btn.setAttribute("id", c.applicationNumber)
+                approve_btn.classList.add("btn-success")
+
+                reject_btn.textContent = "Reject"
+                reject_btn.setAttribute("type", "button")
+                reject_btn.setAttribute("id", c.applicationNumber)
+                reject_btn.classList.add("btn-danger")
+
+
                 application_number.textContent = c.applicationNumber
                 apply_date.textContent = c.applyDate;
                 customer_id.textContent = c.customerId;
@@ -55,21 +77,6 @@ function loadCustomerDetails(loan_applications) {
                 loan_id.textContent = c.loanId;
                 loan_status.textContent = c.loanStatus;
                 loan_tenure.textContent = c.loanTenure;
-                
-                //<button type="button" class="btn btn-success">Success</button>
-                const button = document.createElement("button")
-                button.setAttribute("type", "button")
-                button.setAttribute("id",c.applicationNumber)
-                //button.setAttribute("onclick", "clicked()")
-                button.classList.add("btn")
-                if(c.loanStatus == "pending"){
-                    button.classList.add("btn-success")
-                    button.textContent = "Approve"
-                    pending_IDs.push(c.applicationNumber)
-                }else{
-                    button.classList.add("btn-success")
-                    button.textContent = "Reject"
-                }
 
                 row.appendChild(application_number)
                 row.appendChild(customer_id)
@@ -80,19 +87,23 @@ function loadCustomerDetails(loan_applications) {
                 row.appendChild(loan_emi)
                 row.appendChild(loan_status)
                 row.appendChild(imgEle)
-                row.appendChild(button)    
-                
+
+                if (c.loanStatus == "pending") {
+                    row.appendChild(approve_btn)
+                    row.appendChild(reject_btn)
+                }
+
                 row.classList.add("table-light")
                 row.setAttribute("id", c.applicationNumber)
                 tblBody.appendChild(row)
             }
         )
 
-        const buttons = document.getElementsByTagName("button");
+    const buttons = document.getElementsByTagName("button");
 
-        for (let button of buttons) {
-          button.addEventListener("click", buttonPressed);
-        }
+    for (let button of buttons) {
+        button.addEventListener("click", buttonPressed);
+    }
 
 }
 
