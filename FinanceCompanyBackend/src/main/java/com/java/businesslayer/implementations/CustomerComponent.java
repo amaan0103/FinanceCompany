@@ -35,6 +35,7 @@ public class CustomerComponent<TContract, TImplementation> implements CustomerBu
 	@Override
 	public boolean addApplication(FullApplication app) throws Exception {
 		// TODO Auto-generated method stub
+		app.setApplicationNumber(System.currentTimeMillis());
 		LoanApplication loanApplication = new LoanApplication(app.getApplicationNumber(),app.getCustomerId(),app.getLoanId(),
 		app.getLoanAmount(),app.getLoanStatus(),app.getApplyDate(),app.getLoanTenure(),app.getLoanEmi());
 		boolean flag = ((LoanApplicationContract) dao).addApplication(loanApplication);
@@ -50,7 +51,7 @@ public class CustomerComponent<TContract, TImplementation> implements CustomerBu
 
 
 	@Override
-	public boolean cancelLoan(int applicationNumber) throws Exception {
+	public boolean cancelLoan(long applicationNumber) throws Exception {
 		// TODO Auto-generated method stub
 		return ((LoanApplicationContract) dao).removeApplication(applicationNumber);
 	}
@@ -58,19 +59,19 @@ public class CustomerComponent<TContract, TImplementation> implements CustomerBu
 
 
 	@Override
-	public boolean deleteDocuments(int applicationNumber) throws Exception {
+	public boolean deleteDocuments(long applicationNumber) throws Exception {
 		// TODO Auto-generated method stub
 		return ((DocumentContract) dao).removeDocuments(applicationNumber);
 	}
 
 	@Override
-	public List<FullApplication> getAllApplications(int customerId) throws Exception {
+	public List<FullApplication> getAllApplications(long customerId) throws Exception {
 		// TODO Auto-generated method stub
 		return  ((LoanApplicationContract) dao).getApplicationsById(customerId);
 	}
 	
 	@Override
-	public List<FullApplication> getAllApplications(int customerId, int sort) throws Exception {
+	public List<FullApplication> getAllApplications(long customerId, int sort) throws Exception {
 		// TODO Auto-generated method stub
 		List<FullApplication> list = ((LoanApplicationContract) dao).getApplicationsById(customerId);
 		Collections.sort(list, new Comparator<FullApplication>() {

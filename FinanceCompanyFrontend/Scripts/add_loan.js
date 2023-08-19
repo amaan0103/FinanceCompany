@@ -48,28 +48,64 @@ function upload_loan_data() {
     var loan_emi = this.document.getElementById("loan_emi").value
     var document = this.document.getElementById("document").value
 
-    console.log(customer_id, loan_id, interest, doa, loan_tenure, loan_amount, loan_emi, document)
-    data = {
-        //"applicationNumber" : 11,
-        "customerId" : customer_id,
-        "loanAmount" : loan_amount,
-        "loanId" : loan_id,
-        "loanStatus" : "pending",
-        "loanTenure" : loan_tenure,
-        "loanEmi" : loan_emi
-    }
+    const imgElement = this.document.getElementById('document')
+    // const file = imgElement.files[0]
+    // const reader = new FileReader()
 
-    const req = new XMLHttpRequest();
-    req.onreadystatechange = () => {
-        if (req.status === 200 && req.readyState === 4) {
-            window.alert(req.responseText)
+    // reader.addEventListener(
+    //     'load',
+    //     function () {
+    //         document=reader.result
+    //         console.log(customer_id, loan_id, interest, doa, loan_tenure, loan_amount, loan_emi, document)
+    //         data = {
+    //             //"applicationNumber" : 11,
+    //             "customerId" : customer_id,
+    //             "loanAmount" : loan_amount,
+    //             "loanId" : loan_id,
+    //             "loanStatus" : "pending",
+    //             "loanTenure" : loan_tenure,
+    //             "loanEmi" : loan_emi,
+    //             "documents": document 
+    //         }
+
+    //         const req = new XMLHttpRequest();
+    //         req.onreadystatechange = () => {
+    //             if (req.status === 200 && req.readyState === 4) {
+    //                 window.alert(req.responseText)
+    //             }
+    //         }
+
+    //         req.open('POST', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/submitApplication',true);
+    //         req.setRequestHeader("Content-Type","application/json")
+    //         req.send(JSON.stringify(data));
+
+            
+    //         alert("Loan Applied")
+    //     })
+        // reader.readAsDataURL(file)
+
+        data = {
+            //"applicationNumber" : 11,
+            "customerId" : customer_id,
+            "loanAmount" : loan_amount,
+            "loanId" : loan_id,
+            "loanStatus" : "pending",
+            "loanTenure" : loan_tenure,
+            "loanEmi" : loan_emi,
         }
-    }
 
-    req.open('POST', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/submitApplication',true);
-    req.setRequestHeader("Content-Type","application/json")
-    req.send(JSON.stringify(data));
-    
+        const req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.status === 200 && req.readyState === 4) {
+                window.alert(req.responseText)
+            }
+        }
 
-    alert("Loan Applied")
+        req.open('POST', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/submitApplication',true);
+        req.setRequestHeader("Content-Type","application/json")
+        req.send(JSON.stringify(data));
+
+        
+        alert("Loan Applied")
+        
 }

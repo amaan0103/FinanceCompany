@@ -9,6 +9,6 @@ import com.java.entities.LoanApplication;
 public interface ManagerBusinessContract {
 	List<FullApplication> getAllApplications() throws Exception;
 	List<FullApplication> getAllApplications(int sort) throws Exception;
-	boolean updataStatus(int application_number, String status) throws Exception;
+	boolean updataStatus(long application_number, String status) throws Exception;
 	
 }

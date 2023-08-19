@@ -12,4 +12,5 @@ public interface LoanApplicationContract {
 	boolean removeApplication(long application_number) throws Exception ;
 	boolean approve(long application_number) throws Exception ;
 	boolean reject(long application_number) throws Exception ;
+	LoanApplication getApplication(long application_number) throws Exception;
 }

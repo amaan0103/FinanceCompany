@@ -26,7 +26,7 @@ public class DocumentDataAccess implements DocumentContract{
 	Properties properties;
 	public DocumentDataAccess() throws SQLException, IOException, ClassNotFoundException {
 		try {
-			reader = new FileReader("C:\\Users\\Mourya\\Documents\\GitHub\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
+			reader = new FileReader("C:\\FinanceCompany\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
 			properties = new Properties();
 			properties.load(reader);
 			Class.forName(properties.getProperty("driver"));
@@ -48,8 +48,6 @@ public class DocumentDataAccess implements DocumentContract{
 			throw e;
 		} catch (Exception ex) {
 			throw ex;
-		}finally {
-			closeConnection();
 		}
 	}
 	private void closeConnection() throws SQLException {
@@ -64,14 +62,14 @@ public class DocumentDataAccess implements DocumentContract{
 			statement.setLong(1, docs.getApplicationNumber());
 			
 			Blob blob = connectionInstance.createBlob();
-			blob.setBytes(1, docs.getDocuments().getBytes());
+			try{blob.setBytes(1, docs.getDocuments().getBytes());}catch(Exception e) {};
 			statement.setBlob(2, blob);
 			result = statement.executeUpdate();
 			closeConnection();
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result==0?false:true;
 	}
@@ -86,7 +84,7 @@ public class DocumentDataAccess implements DocumentContract{
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result==0?false:true;
 	}
@@ -112,7 +110,7 @@ public class DocumentDataAccess implements DocumentContract{
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return docs;
 	}
@@ -138,7 +136,7 @@ public class DocumentDataAccess implements DocumentContract{
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return doc;
 	}

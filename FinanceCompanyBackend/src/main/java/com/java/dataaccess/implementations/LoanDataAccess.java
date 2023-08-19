@@ -15,7 +15,7 @@ public class LoanDataAccess implements LoanContract{
 	Properties properties;
 	public LoanDataAccess() throws SQLException, IOException, ClassNotFoundException {
 		try {
-			reader = new FileReader("C:\\Users\\Mourya\\Documents\\GitHub\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
+			reader = new FileReader("C:\\FinanceCompany\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
 			properties = new Properties();
 			properties.load(reader);
 			Class.forName(properties.getProperty("driver"));
@@ -49,11 +49,10 @@ public class LoanDataAccess implements LoanContract{
 			statement.setString(2, loan.getLoanType());
 			statement.setDouble(3,loan.getInterestRate());
 			result = statement.executeUpdate();
-			closeConnection();
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result==0?false:true;
 	}
@@ -75,7 +74,7 @@ public class LoanDataAccess implements LoanContract{
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return loans;
 	}
@@ -89,7 +88,7 @@ public class LoanDataAccess implements LoanContract{
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result==0?false:true;
 	}

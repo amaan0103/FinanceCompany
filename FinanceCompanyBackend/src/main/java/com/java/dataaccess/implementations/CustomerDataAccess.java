@@ -17,7 +17,7 @@ public class CustomerDataAccess implements CustomerContract{
 	
 	public CustomerDataAccess() throws SQLException, IOException, ClassNotFoundException {
 		try {
-			reader = new FileReader("C:\\Users\\Mourya\\Documents\\GitHub\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
+			reader = new FileReader("C:\\FinanceCompany\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
 			properties = new Properties();
 			properties.load(reader);
 			Class.forName(properties.getProperty("driver"));
@@ -64,7 +64,7 @@ public class CustomerDataAccess implements CustomerContract{
 			throw e;
 		}
 		finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result==0?false:true;
 	}
@@ -88,7 +88,7 @@ public class CustomerDataAccess implements CustomerContract{
 			throw e;
 		}
 		finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return customers;
 	}
@@ -105,9 +105,33 @@ public class CustomerDataAccess implements CustomerContract{
 			throw e;
 		}
 		finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result==0?false:true;
+	}
+	@Override
+	public Customer getCustomerById(long id) throws Exception {
+		// TODO Auto-generated method stub
+		Customer customer = null;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("get_customer"));
+			statement.setLong(1, id);
+			resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				customer = new Customer();
+				customer.setCustomerId(resultSet.getLong(1));
+				customer.setCustomerName(resultSet.getString(2));
+				customer.setGender(resultSet.getString(3));
+				customer.setMobile(resultSet.getString(4));
+				customer.setEmail(resultSet.getString(5));
+			}
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return customer;
 	}
 
 }

@@ -39,6 +39,7 @@ public class ClerkComponent<TContract,Timplementation> implements ClerkBusinessC
 	@Override
 	public boolean addApplication(FullApplication app) throws Exception {
 		// TODO Auto-generated method stub
+		app.setApplicationNumber(System.currentTimeMillis());
 		LoanApplication loanApplication = new LoanApplication(app.getApplicationNumber(),app.getCustomerId(),app.getLoanId(),
 		app.getLoanAmount(),app.getLoanStatus(),app.getApplyDate(),app.getLoanTenure(),app.getLoanEmi());
 		boolean flag = ((LoanApplicationContract) dao).addApplication(loanApplication);

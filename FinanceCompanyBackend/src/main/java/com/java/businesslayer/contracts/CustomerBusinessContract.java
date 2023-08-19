@@ -9,9 +9,9 @@ import com.java.entities.LoanApplication;
 
 public interface CustomerBusinessContract {
 	boolean addApplication(FullApplication app) throws Exception;
-	boolean cancelLoan(int application_number) throws Exception;
+	boolean cancelLoan(long application_number) throws Exception;
 	List<Loan> getLoanDetails() throws Exception;
-	List<FullApplication> getAllApplications(int customer_id) throws Exception;
-	boolean deleteDocuments(int application_number) throws Exception;
-	List<FullApplication> getAllApplications(int customerId, int sort) throws Exception;
+	List<FullApplication> getAllApplications(long customer_id) throws Exception;
+	boolean deleteDocuments(long application_number) throws Exception;
+	List<FullApplication> getAllApplications(long customerId, int sort) throws Exception;
 }

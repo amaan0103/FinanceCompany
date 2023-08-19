@@ -28,7 +28,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 	Properties properties;
 	public LoanApplicationDataAccess() throws SQLException, IOException, ClassNotFoundException {
 		try {
-			reader = new FileReader("C:\\Users\\Mourya\\Documents\\GitHub\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
+			reader = new FileReader("C:\\FinanceCompany\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
 			properties = new Properties();
 			properties.load(reader);
 			Class.forName(properties.getProperty("driver"));
@@ -61,7 +61,6 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 	public boolean addApplication(LoanApplication app) throws Exception {
 		// TODO Auto-generated method stub
 		int result=0;
-		app.setApplicationNumber(System.currentTimeMillis());
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("add_loan_app"));
 			statement.setLong(1,app.getApplicationNumber());
@@ -77,7 +76,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result==0?false:true;
 	}
@@ -110,12 +109,41 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 				app.setDocuments(buf.toString());
 				apps.add(app);
 			}
+			System.out.println("\n\n"+apps.get(0).getDocuments()+"\n\n");
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return apps;
+	}
+	
+	@Override
+	public LoanApplication getApplication(long application_number) throws Exception {
+		// TODO Auto-generated method stub
+		
+		LoanApplication app = null;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("get_app"));
+			statement.setLong(1, application_number);
+			resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				app = new LoanApplication();
+				app.setApplicationNumber(resultSet.getLong(1));
+				app.setCustomerId(resultSet.getLong(2));
+				app.setLoanId(resultSet.getInt(3));
+				app.setLoanAmount(resultSet.getDouble(4));
+				app.setLoanTenure(resultSet.getInt(5));
+				app.setLoanEmi(resultSet.getDouble(6));
+				app.setApplyDate(resultSet.getDate(7));
+				app.setLoanStatus(resultSet.getString(8));
+			}
+		}catch(Exception e) {
+			throw e;
+		}finally {
+//			closeConnection();
+		}
+		return app;
 	}
 
 	@Override
@@ -151,7 +179,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return apps;
 	}
@@ -167,7 +195,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result==0?false:true;
 	}
@@ -184,7 +212,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result==0?false:true;
 	}
@@ -201,7 +229,7 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 		}catch(Exception e) {
 			throw e;
 		}finally {
-			closeConnection();
+//			closeConnection();
 		}
 		return result==0?false:true;
 	}

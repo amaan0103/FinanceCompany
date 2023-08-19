@@ -34,7 +34,7 @@ public class ManagerService {
 	@Path("/status/{applicationNumber}/{status}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ServiceResponse<Boolean> updateApplication(@PathParam("applicationNumber") int applicationNumber, @PathParam("status") String status) throws Exception{
+	public ServiceResponse<Boolean> updateApplication(@PathParam("applicationNumber") long applicationNumber, @PathParam("status") String status) throws Exception{
 		try {
 		ManagerComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ManagerComponent<>(new LoanApplicationDataAccess());
 		boolean flag = cc.updataStatus(applicationNumber,status);
