@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Customer</title>
+    <script src="../../Scripts/add_customer.js"></script>
     <link rel="stylesheet" href="/FinanceCompanyFrontend/Styles/bootstrap.css">
     <style>
         h2,
@@ -19,7 +20,7 @@
         <h2>Registration Form</h2>
         <h6>CUSTOMER DETAILS</h6>
 
-        <form action="post">
+        <form action="" onsubmit="upload_customer_data()">
             <div class="form-group mt-4 m-5">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="first_name" placeholder="First Name">
