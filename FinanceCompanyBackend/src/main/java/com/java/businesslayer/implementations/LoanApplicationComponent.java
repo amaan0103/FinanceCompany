@@ -112,16 +112,18 @@ public class LoanApplicationComponent<TContract, TImplementation> implements Loa
 		System.out.println("\n\n\n"+email+"\n\n\n");
 		String subject = "Regarding your Loan Application";
 		String mailBody = " This email is to inform you that your application: "+application_number+" has been ";
+		boolean flag = false;
 		if(status.toLowerCase().equals("approved")) {
+			flag = ((LoanApplicationContract) dao).approve(application_number);
 			mailBody+="approved !!";
 			sendEmail(email, subject, mailBody);
-			return ((LoanApplicationContract) dao).approve(application_number);
 		}
 		else {
+			flag = ((LoanApplicationContract) dao).reject(application_number);
 			mailBody+=" rejected.";
 			sendEmail(email, subject, mailBody);
-			return ((LoanApplicationContract) dao).reject(application_number);
 		}
+		return flag;
 	}
 	
 	public void sendEmail(String to, String subject, String content) throws Exception{

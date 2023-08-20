@@ -133,5 +133,28 @@ public class CustomerDataAccess implements CustomerContract{
 		}
 		return customer;
 	}
+	@Override
+	public Customer getCustomerByEmail(String email) throws Exception {
+		Customer customer = null;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("get_customer_by_email"));
+			statement.setString(1, email);
+			resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				customer = new Customer();
+				customer.setCustomerId(resultSet.getLong(1));
+				customer.setCustomerName(resultSet.getString(2));
+				customer.setGender(resultSet.getString(3));
+				customer.setMobile(resultSet.getString(4));
+				customer.setEmail(resultSet.getString(5));
+			}
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return customer;
+	}
 
 }
