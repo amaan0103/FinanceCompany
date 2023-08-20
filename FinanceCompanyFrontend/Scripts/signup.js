@@ -81,6 +81,8 @@ function upload_customer_data() {
         send_to_authtable(data2)
 
         alert("Account Created, Please Login!")
+
+        // must redirect to login page
         window.location.replace("http://127.0.0.1:5501/FinanceCompanyFrontend/login.html?")
     }
 }
