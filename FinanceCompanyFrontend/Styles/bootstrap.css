@@ -23,6 +23,10 @@
   margin: 10px;
 }
 
+th {
+  cursor: pointer;
+}
+
 :root,
 [data-bs-theme=light] {
   --bs-blue: #4582ec;

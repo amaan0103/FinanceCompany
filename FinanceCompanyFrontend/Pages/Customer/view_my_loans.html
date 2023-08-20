@@ -16,17 +16,17 @@
         <h4 class="p-1" style="text-align: center;"><b>YOUR LOAN DETAILS</b></h4>
         <h6 id="customerid_index" class="pb-1" style="text-align: center;">CUSTOMER ID :</h6>
 
-        <table class="table table-hover table-dark table-striped">
+        <table class="table table-hover table-dark table-striped" id="myTable">
             <thead>
                 <tr>
-                    <th scope="col">Application Number</th>
-                    <th scope="col">Loan ID</th>
-                    <th scope="col">Date of Apply</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Tenure</th>
-                    <th scope="col">EMI</th>
-                    <th scope="col">Approval Status</th>
-                    <th scope="col">Documents</th>
+                    <th scope="col" onclick="sortTable(0)">Application Number</th>
+                    <th scope="col" onclick="sortTable(1)">Loan ID</th>
+                    <th scope="col" onclick="sortTable(2)">Date of Apply</th>
+                    <th scope="col" onclick="sortIntTable(3)">Amount</th>
+                    <th scope="col" onclick="sortIntTable(4)">Tenure</th>
+                    <th scope="col" onclick="sortIntTable(5)">EMI</th>
+                    <th scope="col" onclick="sortTable(6)">Approval Status</th>
+                    <th scope="col" onclick="sortTable(7)">Documents</th>
                 </tr>
             </thead>
             <!-- 

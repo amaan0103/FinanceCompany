@@ -14,14 +14,14 @@
 <body>
     <div id="container">
         <h4 class="p-1" style="text-align: center;"><b>CUSTOMER DETAILS</b></h4>
-        <table class="table table-hover table-dark table-striped">
+        <table class="table table-hover table-dark table-striped sortable" id="myTable">
             <thead>
                 <tr>
-                    <th scope="col">Customer ID</th>
-                    <th scope="col">Customer Name</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Mobile</th>
-                    <th scope="col">GMail</th>
+                    <th scope="col" onclick="sortTable(0)">Customer ID</th>
+                    <th scope="col" onclick="sortTable(1)">Customer Name</th>
+                    <th scope="col" onclick="sortTable(2)">Gender</th>
+                    <th scope="col" onclick="sortIntTable(3)">Mobile</th>
+                    <th scope="col" onclick="sortTable(4)">GMail</th>
                 </tr>
             </thead>
             <!-- 
