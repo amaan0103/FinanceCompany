@@ -3,22 +3,22 @@ package com.java.entities;
 
 
 public class ServiceResponse<T> {
-	private String mesage;
+	private String message;
 	private int statusCode;
 	private T responseData;
 	public ServiceResponse() {
 		
 	}
 	public ServiceResponse(String mesage, int statusCode, T responseData) {
-		this.mesage = mesage;
+		this.message = mesage;
 		this.statusCode = statusCode;
 		this.responseData = responseData;
 	}
 	public String getMesage() {
-		return mesage;
+		return message;
 	}
 	public void setMesage(String mesage) {
-		this.mesage = mesage;
+		this.message = mesage;
 	}
 	public int getStatusCode() {
 		return statusCode;
