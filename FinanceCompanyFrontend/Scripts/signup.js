@@ -80,6 +80,7 @@ function upload_customer_data() {
         send_to_customertable(data1)
         send_to_authtable(data2)
 
-        alert("Customer Created!")
+        alert("Account Created, Please Login!")
+        window.location.replace("http://127.0.0.1:5501/FinanceCompanyFrontend/login.html?")
     }
 }
