@@ -3,17 +3,20 @@ const buttonPressed = e => {
     if (confirm(`Do you want to Delete Application ID : ${application_number} ?`)) {
 
         const req = new XMLHttpRequest();
-        req.onreadystatechange = function () {
-            if (req.status === 200 && req.readyState === 4) {
-                const serviceResponseObject = JSON.parse(req.responseText)
-                if(serviceResponseObject.statusCode == 200){
-                    alert(`Loan Application ID : ${application_number} is Deleted!`)
-                }
-            }
-        }
         req.open('DELETE', `http://localhost:8080/FinanceCompanyBackend/rest/customer/deleteApplication/${application_number}`, true);
+
+        //req.onload = function(){
+        //    console.log(req.readyState, req.status);
+        //    if (req.status == 200) {
+        //        alert(`Loan Application ID : ${application_number} is Deleted!`)
+        //    } else {
+        //        alert("Error while Deleting the Application!")
+        //    }
+        //};
+
         req.send();
     }
+    alert(`Loan Application ID : ${application_number} is Deleted!`)
     location.reload()
 }
 
