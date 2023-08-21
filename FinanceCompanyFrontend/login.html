@@ -15,15 +15,15 @@
     <div id="container" style="padding: 0px 250px">
         <div class="bg-dark p-5 mt-3" id="loginBody">
             <h1 style="text-align: center;" class="text-light"><b>Financial Company</b></h1>
-            <form action="" onsubmit="upload_data()">
+            <form action="">
                 <div class="mt-1">
                     <label class="form-label mt-4">Floating labels</label>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
                         <label for="email">Email</label>
                     </div>
                     <div class="mb-4">
-                        <label for="role" class="form-label text-light">LOGIN AS</label>
+                        <label for="role" class="form-label text-light">LOGIN AS</label required>
                         <select class="form-select p-3" id="role">
                             <option value="3">Customer</option>
                             <option value="2">Clerk</option>
@@ -32,11 +32,11 @@
                     </div>
                     <div class="form-floating mb-4">
                         <input type="password" class="form-control" id="password" placeholder="Password"
-                            autocomplete="off">
+                            autocomplete="off" required>
                         <label for="password">Password</label>
                     </div> 
                 </div>
-                <button type="submit" class="btn btn-outline-light btn-lg" style="margin: auto;display: block;">SIGN IN</button>
+                <button type="button" id="loginButton" class="btn btn-outline-light btn-lg" style="margin: auto;display: block;">SIGN IN</button>
                 <a type="button" href="signup.html" style="margin: auto;display: block;text-align: center;"
                     class="btn btn-link btn-lg text-light-emphasis ">Don't Have an Account?</a>
             </form>

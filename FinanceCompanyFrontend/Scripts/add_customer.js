@@ -3,19 +3,6 @@ function send_to_customertable(data) {
     req.open('POST', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/addCustomer', true);
     req.setRequestHeader("Content-Type", "application/json");
 
-    // req.onload = function(){
-    //     console.log(req.status, req.readyState);
-    //     if (req.status === 200 && req.readyState === 4) {
-    //         window.alert(req.responseText)
-    //     }
-    // };
-    // req.onreadystatechange = function(){
-    //     console.log(req.status, req.readyState);    
-    //     if (req.status === 200 && req.readyState === 4) {
-    //         window.alert(req.responseText)
-    //     }
-    // };
-
     req.onload = () => {
         console.log(JSON.parse(req.response));
     };

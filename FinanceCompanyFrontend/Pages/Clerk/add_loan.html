@@ -19,15 +19,14 @@
     <div id="container">
         <h2>Loan Application Form</h2>
         <h6>LOAN DETAILS</h6>
-
-        <form action="" onsubmit="upload_loan_data()">
+        <form action="">
             <div class="form-group mt-4 m-5">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="customer_id" placeholder="Customer ID">
+                    <input type="text" class="form-control" id="customer_id" placeholder="Customer ID" required>
                     <label for="floatingInput">Customer ID</label>
                 </div>
                 <div class="form-group mb-3">
-                    <select class="form-select" id="loan_type" onclick="set_interest()">
+                    <select class="form-select" id="loan_type" onclick="set_interest()" required>
                         <option selected disabled>Loan Type</option>
                         <option value="personal">Personal Loan</option>
                         <option value="education">Education Loan</option>
@@ -45,12 +44,12 @@
                     <label for="floatingInput">Date of Apply</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="loan_amount" placeholder="Loan Amount">
+                    <input type="number" class="form-control" id="loan_amount" placeholder="Loan Amount" required>
                     <label for="floatingInput">Loan Amount</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="number" class="form-control" id="loan_tenure" placeholder="Loan Tenure"
-                        oninput="calculate_emi()">
+                        oninput="calculate_emi()" required>
                     <label for="floatingInput">Loan Tenure</label>
                 </div>
                 <div class="form-floating">
@@ -59,10 +58,10 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="document" class="form-label mt-4">Upload the Document</label>
-                    <input class="form-control" type="file" id="document">
+                    <input class="form-control" type="file" id="document" required>
                 </div>
                 <div class="form-floating mb-3" style="text-align: center;">
-                    <button type="submit" class="btn btn-outline-dark btn-lg" id="submitButton">Submit</button>
+                    <input type="button" class="btn btn-outline-dark btn-lg" id="btnUpload" onclick="apply_loan()" value="Submit"></input>
                 </div>
             </div>
         </form>

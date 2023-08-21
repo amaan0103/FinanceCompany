@@ -163,8 +163,8 @@ function getLoans() {
             loadLoanDetails(serviceResponseObject.responseData)
         }
     }
-    // need to get the customer ID here from credentials
-    customerId = 1
+    // got the customer ID from localstorage
+    customerId = localStorage.getItem("customer_id")
     document.getElementById("customerid_index").innerText += " " + customerId.toString()
     req.open('GET', `http://localhost:8080/FinanceCompanyBackend/rest/customer/getApplicationsCustomer/${customerId}`)
     req.send()

@@ -36,8 +36,21 @@ function calculate_emi() {
     document.getElementById("loan_emi").value = emi
 }
 
-function upload_loan_data() {
+async function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = async () => {
+            const base64String = reader.result;
+            resolve(base64String);
+        };
+        reader.onerror = (error) => {
+            reject(error);
+        };
+        reader.readAsDataURL(file);
+    });
+}
 
+async function apply_loan() {
     var customer_id = this.document.getElementById("customer_id").value
     var loan_type = this.document.getElementById("loan_type").value
     var loan_id = { "personal": 1, "education": 2, "car": 3, "home": 4 }[loan_type]
@@ -49,9 +62,9 @@ function upload_loan_data() {
 
     const imgElement = this.document.getElementById('document')
     const file = imgElement.files[0]
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-
+    //const reader = new FileReader()
+    const document = await convertToBase64(file)
+    console.log(document);
     const data = {
         "customerId": customer_id,
         "loanAmount": loan_amount,
@@ -59,21 +72,37 @@ function upload_loan_data() {
         "loanStatus": "pending",
         "loanTenure": loan_tenure,
         "loanEmi": loan_emi,
-        "documents": reader.result
+        "documents": document
     }
-
     const req = new XMLHttpRequest()
-    req.onreadystatechange = function () {
+    req.onreadystatechange = async () => {
         if (req.status === 200 && req.readyState === 4) {
             console.log(JSON.parse(req.responseText))
+        }
+        else {
+            console.log(req.status)
         }
     }
     req.open('POST', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/submitApplication', true)
     req.setRequestHeader("Content-Type", "application/json")
     req.send(JSON.stringify(data))
 
-    alert("Loan Succesfully Applied!")
+
+    alert("Loan Applied")
+
 }
+
+    // const req = new XMLHttpRequest()
+    // req.onreadystatechange = function () {
+    //     if (req.status === 200 && req.readyState === 4) {
+    //         console.log(JSON.parse(req.responseText))
+    //     }
+    // }
+    // req.open('POST', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/submitApplication', true)
+    // req.setRequestHeader("Content-Type", "application/json")
+    // req.send(JSON.stringify(data))
+
+
 
 /*
 data = {
