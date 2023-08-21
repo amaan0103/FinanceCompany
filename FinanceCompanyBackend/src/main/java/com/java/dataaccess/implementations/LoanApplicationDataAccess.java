@@ -233,5 +233,41 @@ public class LoanApplicationDataAccess implements LoanApplicationContract {
 		}
 		return result==0?false:true;
 	}
+	@Override
+	public List<FullApplication> getStatus(String status) throws Exception {
+		FullApplication app = null;
+		List<FullApplication> apps = new ArrayList<>();
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("get_all_apps_by_status"));
+			statement.setString(1, status);
+			resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				ResultSetMetaData rsmd = resultSet.getMetaData();
+				System.out.println(rsmd.getColumnCount());
+				app = new FullApplication();
+				app.setApplicationNumber(resultSet.getLong(1));
+				app.setCustomerId(resultSet.getLong(2));
+				app.setLoanId(resultSet.getInt(3));
+				app.setLoanAmount(resultSet.getDouble(4));
+				app.setLoanTenure(resultSet.getInt(5));
+				app.setLoanEmi(resultSet.getDouble(6));
+				app.setApplyDate(resultSet.getDate(7));
+				app.setLoanStatus(resultSet.getString(8));
+				StringBuffer buf = new StringBuffer();
+				String temp = null;
+				BufferedReader reader = new BufferedReader(new InputStreamReader(resultSet.getBlob(10).getBinaryStream()));
+				while((temp = reader.readLine())!=null) {
+					buf.append(temp);
+				}
+				app.setDocuments(buf.toString());
+				apps.add(app);
+			}
+		}catch(Exception e) {
+			throw e;
+		}finally {
+//			closeConnection();
+		}
+		return apps;
+	}
 
 }

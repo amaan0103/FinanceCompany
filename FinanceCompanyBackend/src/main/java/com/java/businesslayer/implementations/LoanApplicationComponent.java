@@ -141,14 +141,14 @@ public class LoanApplicationComponent<TContract, TImplementation> implements Loa
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("amaanandmourya@outlook.com", "OracleProject");
+                        return new PasswordAuthentication("amaanoracletest@outlook.com", "OracleProject");
                     }
                 });
 
         try {
             // Create a new MimeMessage object
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("amaanandmourya@outlook.com"));
+            message.setFrom(new InternetAddress("amaanoracletest@outlook.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(subject);
             message.setText(content);
@@ -161,5 +161,11 @@ public class LoanApplicationComponent<TContract, TImplementation> implements Loa
             e.printStackTrace();
         }
     }
+
+	@Override
+	public List<FullApplication> getStatus(String status) throws Exception {
+		// TODO Auto-generated method stub
+		return ((LoanApplicationContract) dao).getStatus(status);
+	}
 
 }

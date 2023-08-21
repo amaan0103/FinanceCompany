@@ -101,6 +101,21 @@ public class ClerkService {
 		}
 	}
 	
+	@GET
+	@Path("/getApplicationStatus/{status}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ServiceResponse<List<FullApplication>> getApplicationStatus(@PathParam("status") String status){
+		//sort: 1. sort by loan type 2. sort by apply_date 3. sort by tenure 4. sort by loan amount
+		try {
+//			ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
+			LoanApplicationComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new LoanApplicationComponent<>(new LoanApplicationDataAccess());
+			List<FullApplication> list = cc.getStatus(status);
+		return new ServiceResponse<List<FullApplication>>("records found",200,list);
+		} catch (Exception e) {
+			return new ServiceResponse<List<FullApplication>>(e.getMessage(), 400, null);
+		}
+	}
+	
 	@POST
 	@Path("/addLoan")
 	@Consumes(MediaType.APPLICATION_JSON)

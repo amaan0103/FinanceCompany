@@ -13,4 +13,5 @@ public interface LoanApplicationContract {
 	boolean approve(long application_number) throws Exception ;
 	boolean reject(long application_number) throws Exception ;
 	LoanApplication getApplication(long application_number) throws Exception;
+	List<FullApplication> getStatus(String status) throws Exception;
 }

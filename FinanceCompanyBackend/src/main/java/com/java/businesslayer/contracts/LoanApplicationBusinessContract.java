@@ -12,4 +12,5 @@ public interface LoanApplicationBusinessContract {
 	boolean cancelLoan(long application_number) throws Exception;
 	List<FullApplication> getAllApplications(long customerId, int sort) throws Exception;
 	boolean updataStatus(long application_number, String status) throws Exception;
+	List<FullApplication> getStatus(String status) throws Exception;
 }
