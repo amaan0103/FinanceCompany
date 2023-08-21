@@ -17,7 +17,7 @@ public class CustomerDataAccess implements CustomerContract{
 	
 	public CustomerDataAccess() throws SQLException, IOException, ClassNotFoundException {
 		try {
-			reader = new FileReader("C:\\Users\\Mourya\\Documents\\GitHub\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
+			reader = new FileReader("C:\\FinanceCompany\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
 			properties = new Properties();
 			properties.load(reader);
 			Class.forName(properties.getProperty("driver"));
@@ -91,23 +91,6 @@ public class CustomerDataAccess implements CustomerContract{
 //			closeConnection();
 		}
 		return customers;
-	}
-	@Override
-	public boolean deleteCustomer(long customerId) throws Exception {
-		// TODO Auto-generated method stub
-		int result=0;
-		try {
-			statement = connectionInstance.prepareStatement(properties.getProperty("delete_customer"));
-			statement.setLong(1, customerId);
-			result = statement.executeUpdate();
-			
-		}catch(Exception e) {
-			throw e;
-		}
-		finally {
-//			closeConnection();
-		}
-		return result==0?false:true;
 	}
 	@Override
 	public Customer getCustomerById(long id) throws Exception {

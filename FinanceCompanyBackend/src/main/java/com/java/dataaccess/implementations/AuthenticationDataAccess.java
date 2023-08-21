@@ -19,7 +19,6 @@ public class AuthenticationDataAccess implements AuthenticationContract {
 	ResultSet resultSet;
 	FileReader reader;
 	Properties properties;
-	
 	public AuthenticationDataAccess() throws SQLException, IOException, ClassNotFoundException {
 		try {
 			reader = new FileReader("C:\\FinanceCompany\\FinanceCompany\\FinanceCompanyBackend\\src\\main\\java\\com\\java\\dataaccess\\implementations\\db.properties");
@@ -124,6 +123,24 @@ public class AuthenticationDataAccess implements AuthenticationContract {
 			statement.setString(1, user.getUsername());
 			statement.setString(2,user.getPassword());
 			statement.setInt(3, user.getRole());
+			result = statement.executeUpdate();
+			
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return result==0?false:true;
+	}
+	@Override
+	public boolean changePassword(long customerId, String pass) throws Exception {
+		// TODO Auto-generated method stub
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("change_pass"));
+			statement.setString(1, pass);
+			statement.setLong(2,customerId);
 			result = statement.executeUpdate();
 			
 		}catch(Exception e) {

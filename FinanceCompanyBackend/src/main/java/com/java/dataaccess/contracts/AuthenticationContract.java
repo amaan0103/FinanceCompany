@@ -7,4 +7,5 @@ public interface AuthenticationContract {
 	User getClerk(String username) throws Exception;
 	User getManager(String username) throws Exception;
 	boolean addUser(User user) throws Exception;
+	boolean changePassword(long customerId, String pass) throws Exception;
 }

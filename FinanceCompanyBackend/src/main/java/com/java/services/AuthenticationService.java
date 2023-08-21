@@ -13,6 +13,7 @@ import com.java.entities.User;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
@@ -44,5 +45,16 @@ public class AuthenticationService {
 		ServiceResponse<AuthResponse> sr = new ServiceResponse<AuthResponse>("success",200,new AuthResponse(flag,user.getRole()));
 //		sr.setCustomerId(flag);
 		return sr;
+	}
+	
+	@POST
+	@Path("/changePassword/{customerId}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ServiceResponse<Boolean> changePassword(@PathParam("customerId") long customerId, String password) throws Exception{
+		AuthenticationComponent<AuthenticationContract,AuthenticationDataAccess> ac = new AuthenticationComponent<>(new AuthenticationDataAccess());
+		boolean flag = ac.changePassword(customerId, password);
+		if(flag)	return new ServiceResponse<Boolean>("changed successfully",200,flag);
+		else		return new ServiceResponse<Boolean>("fail",400,flag);
 	}
 }

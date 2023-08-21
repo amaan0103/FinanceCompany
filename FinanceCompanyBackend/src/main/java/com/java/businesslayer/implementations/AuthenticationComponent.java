@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import com.java.businesslayer.contracts.AuthenticationBusinessContract;
+import com.java.dataaccess.contracts.AuthenticationContract;
 import com.java.dataaccess.implementations.AuthenticationDataAccess;
 import com.java.dataaccess.implementations.CustomerDataAccess;
 import com.java.entities.Customer;
@@ -37,12 +38,15 @@ public class AuthenticationComponent<TContract, TImplementation> implements Auth
 	public long login(User user) throws Exception {
 		// TODO Auto-generated method stub
 		User userDB = null;
+		System.out.println("here login");
 		if(user.getRole()==1)	userDB=((AuthenticationDataAccess) dao).getManager(user.getUsername());
 		else if(user.getRole()==2)	userDB = ((AuthenticationDataAccess) dao).getClerk(user.getUsername());
 		else	userDB=((AuthenticationDataAccess) dao).getUser(user.getUsername());
+		System.out.println("here 2 login");
 		if(userDB == null)	return -1;
 		if(!isPassValid(user.getPassword(),userDB.getPassword()))	return -1;
 		if(user.getRole()!=3)	return 0;
+		System.out.println("here 3 login");
 		CustomerDataAccess cdao = new CustomerDataAccess();
 		Customer c = cdao.getCustomerByEmail(user.getUsername());
 		return c.getCustomerId();
@@ -67,6 +71,11 @@ public class AuthenticationComponent<TContract, TImplementation> implements Auth
     private boolean isPassValid(String plainPassword, String storedPassword) {
         return hashPasswords(plainPassword).equals(storedPassword);
     }
+
+	@Override
+	public boolean changePassword(long customerId, String pass) throws Exception {
+		return ((AuthenticationContract) dao).changePassword(customerId,hashPasswords(pass));
+	}
 
 
 
