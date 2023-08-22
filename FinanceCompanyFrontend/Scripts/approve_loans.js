@@ -1,5 +1,79 @@
 //function to load data in Table body element
 //"applicationNumber":1,"applyDate":"2020-09-04Z","customerId":1,"loanAmount":1000.0,"loanEmi":5670.0,"loanId":1,"loanStatus":"pending","loanTenure":5
+function sortIntTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    dir = "asc";
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+      for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        if (dir == "asc") {
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (Number(x.innerHTML) < Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        switchcount++;
+      } else {
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+  
+  function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    dir = "asc";
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+      for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        switchcount++;
+      } else {
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+
 async function downloadImage(
     imageSrc,
     nameOfDownload = 'my-image.png',
@@ -156,7 +230,7 @@ function loadCustomerDetails(loan_applications) {
                     div_ele.appendChild(reject_btn)
                     big_parent.appendChild(div_ele)
                     row.appendChild(big_parent)
-                }else{
+                } else {
                     div_ele = document.createElement("div")
                     div_ele.classList.add("btn-group")
                     div_ele.appendChild(approve_btn)
@@ -191,24 +265,49 @@ function getApplications() {
 }
 
 
-window.addEventListener('DOMContentLoaded',()=>{
-    document.getElementById("xMark").addEventListener('click',()=>{
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("xMark").addEventListener('click', () => {
         document.getElementById("modal_head").style.display = "none";
-      })
+    })
 })
-window.addEventListener('DOMContentLoaded',()=>{
-    document.getElementById("close").addEventListener('click',()=>{
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("close").addEventListener('click', () => {
         document.getElementById("modal_head").style.display = "none";
-      })
-      
+    })
+
 })
 //code which will be executed immediately afetr DOM content creation is completed and the page is loaded in the browser
 window.addEventListener(
-        'DOMContentLoaded',
-        function () {
-            getApplications()
-        },
-    )
+    'DOMContentLoaded',
+    function () {
+        getApplications()
+    },
+)
+
+function search() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")
+        var found = false
+        for (j = 0; j < td.length - 2; j++) {
+            if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                found = true;
+            }
+        }
+        if (found) {
+            tr[i].style.display = "";
+            found = false;
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+
 
 
 
