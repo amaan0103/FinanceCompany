@@ -3,14 +3,14 @@ package com.java.entities;
 public class User {
 	private String username;
 	private String password;
-	private int role;
+	private String token;
 	
 	public User() {}
-	public User(String username, String password, int role) {
+	public User(String username, String password, String token) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.role = role;
+		this.token = token;
 	}
 	public String getUsername() {
 		return username;
@@ -24,10 +24,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getRole() {
-		return role;
+	public String getToken() {
+		return token;
 	}
-	public void setRole(int role) {
-		this.role = role;
+	public void setToken(String token) {
+		this.token = token;
 	}
 }

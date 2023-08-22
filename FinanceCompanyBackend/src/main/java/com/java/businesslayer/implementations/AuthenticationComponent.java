@@ -7,7 +7,9 @@ import com.java.businesslayer.contracts.AuthenticationBusinessContract;
 import com.java.dataaccess.contracts.AuthenticationContract;
 import com.java.dataaccess.implementations.AuthenticationDataAccess;
 import com.java.dataaccess.implementations.CustomerDataAccess;
+import com.java.entities.AuthResponse;
 import com.java.entities.Customer;
+import com.java.entities.RandomString;
 import com.java.entities.User;
 
 public class AuthenticationComponent<TContract, TImplementation> implements AuthenticationBusinessContract {
@@ -35,21 +37,28 @@ public class AuthenticationComponent<TContract, TImplementation> implements Auth
 	}
 
 	@Override
-	public long login(User user) throws Exception {
+	public AuthResponse login(User user, String role) throws Exception {
 		// TODO Auto-generated method stub
 		User userDB = null;
-		System.out.println("here login");
-		if(user.getRole()==1)	userDB=((AuthenticationDataAccess) dao).getManager(user.getUsername());
-		else if(user.getRole()==2)	userDB = ((AuthenticationDataAccess) dao).getClerk(user.getUsername());
+		
+		if(role.equals("MANAGER"))	userDB=((AuthenticationDataAccess) dao).getManager(user.getUsername());
+		else if(role.equals("CLERK"))	userDB = ((AuthenticationDataAccess) dao).getClerk(user.getUsername());
 		else	userDB=((AuthenticationDataAccess) dao).getUser(user.getUsername());
-		System.out.println("here 2 login");
-		if(userDB == null)	return -1;
-		if(!isPassValid(user.getPassword(),userDB.getPassword()))	return -1;
-		if(user.getRole()!=3)	return 0;
-		System.out.println("here 3 login");
+		
+		if(userDB == null)	return null;
+		if(!isPassValid(user.getPassword(),userDB.getPassword()))	return null;
+		
+		user.setToken(new RandomString().nextString());
+		boolean flag = false;
+		if(role.equals("MANAGER"))	flag=((AuthenticationDataAccess) dao).setManagerToken(user);
+		else if(role.equals("CLERK"))	flag = ((AuthenticationDataAccess) dao).setClerkToken(user);
+		else	flag=((AuthenticationDataAccess) dao).setCustomerToken(user);
+		
+		if(!flag)	return null;
+		if(!role.equals("CUSTOMER"))	return new AuthResponse(0,user.getToken());
 		CustomerDataAccess cdao = new CustomerDataAccess();
 		Customer c = cdao.getCustomerByEmail(user.getUsername());
-		return c.getCustomerId();
+		return new AuthResponse(c.getCustomerId(),user.getToken());
 	}
 
 	private String hashPasswords(String password) {
@@ -75,6 +84,14 @@ public class AuthenticationComponent<TContract, TImplementation> implements Auth
 	@Override
 	public boolean changePassword(long customerId, String pass) throws Exception {
 		return ((AuthenticationContract) dao).changePassword(customerId,hashPasswords(pass));
+	}
+
+	@Override
+	public boolean logout(String token, String role) throws Exception {
+		// TODO Auto-generated method stub
+		if(role.equals("CUSTOMER"))	return ((AuthenticationDataAccess) dao).removeCustomerToken(token);
+		else if(role.equals("MANAGER"))	return ((AuthenticationDataAccess) dao).removeManagerToken(token);
+		else	return ((AuthenticationDataAccess) dao).removeClerkToken(token);
 	}
 
 

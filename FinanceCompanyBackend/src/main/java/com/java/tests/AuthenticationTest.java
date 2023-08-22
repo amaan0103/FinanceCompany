@@ -8,6 +8,7 @@ import org.junit.*;
 import com.java.businesslayer.implementations.AuthenticationComponent;
 import com.java.dataaccess.contracts.AuthenticationContract;
 import com.java.dataaccess.implementations.AuthenticationDataAccess;
+import com.java.entities.AuthResponse;
 import com.java.entities.User;
 
 public class AuthenticationTest {
@@ -17,8 +18,8 @@ public class AuthenticationTest {
 	
 	@Test
 	public void loginTest() throws Exception {
-		User user = new User("ManagerAccount","ManagerPassword",1);
-		long flag = dao.login(user);
-		Assert.assertEquals(flag,0);
+		User user = new User("ManagerAccount","ManagerPassword","randommmm");
+		AuthResponse flag = dao.login(user,"MANAGER");
+		Assert.assertNotNull(flag);
 	}
 }

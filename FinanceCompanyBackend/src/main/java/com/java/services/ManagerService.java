@@ -7,12 +7,15 @@ import com.java.dataaccess.contracts.LoanApplicationContract;
 import com.java.dataaccess.implementations.LoanApplicationDataAccess;
 import com.java.entities.FullApplication;
 import com.java.entities.LoanApplication;
+import com.java.entities.Role;
+import com.java.entities.Secured;
 import com.java.entities.ServiceResponse;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/manager")
+@Secured(Role.MANAGER)
 public class ManagerService {
 	public ManagerService() {}
 	

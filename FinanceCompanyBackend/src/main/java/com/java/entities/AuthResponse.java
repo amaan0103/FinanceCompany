@@ -2,11 +2,11 @@ package com.java.entities;
 
 public class AuthResponse {
 	private long customerId;
-	private int role;
-	public AuthResponse(long customerId, int role) {
+	private String  token;
+	public AuthResponse(long customerId, String token) {
 		super();
 		this.customerId = customerId;
-		this.role = role;
+		this.token = token;
 	}
 	public long getCustomerId() {
 		return customerId;
@@ -14,10 +14,10 @@ public class AuthResponse {
 	public void setCustomerId(long customerId) {
 		this.customerId = customerId;
 	}
-	public int getRole() {
-		return role;
+	public String getToken() {
+		return token;
 	}
-	public void setRole(int role) {
-		this.role = role;
+	public void setRole(String token) {
+		this.token = token;
 	}
 }

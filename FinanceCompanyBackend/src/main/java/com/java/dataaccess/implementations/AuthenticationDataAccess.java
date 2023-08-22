@@ -1,6 +1,7 @@
 package com.java.dataaccess.implementations;
 
 import java.io.FileReader;
+import com.java.entities.RandomString;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -61,7 +62,7 @@ public class AuthenticationDataAccess implements AuthenticationContract {
 				user = new User();
 				user.setUsername(resultSet.getString(1));
 				user.setPassword(resultSet.getString(2));
-				user.setRole(resultSet.getInt(3));
+				user.setToken(resultSet.getString(3));
 			}
 		}catch(Exception e) {
 			throw e;
@@ -82,7 +83,7 @@ public class AuthenticationDataAccess implements AuthenticationContract {
 				user = new User();
 				user.setUsername(resultSet.getString(1));
 				user.setPassword(resultSet.getString(2));
-				user.setRole(resultSet.getInt(3));
+				user.setToken(resultSet.getString(3));
 			}
 		}catch(Exception e) {
 			throw e;
@@ -103,7 +104,7 @@ public class AuthenticationDataAccess implements AuthenticationContract {
 				user = new User();
 				user.setUsername(resultSet.getString(1));
 				user.setPassword(resultSet.getString(2));
-				user.setRole(resultSet.getInt(3));
+				user.setToken(resultSet.getString(3));
 			}
 		}catch(Exception e) {
 			
@@ -122,7 +123,7 @@ public class AuthenticationDataAccess implements AuthenticationContract {
 			statement = connectionInstance.prepareStatement(properties.getProperty("add_user"));
 			statement.setString(1, user.getUsername());
 			statement.setString(2,user.getPassword());
-			statement.setInt(3, user.getRole());
+			statement.setString(3,null);
 			result = statement.executeUpdate();
 			
 		}catch(Exception e) {
@@ -151,5 +152,135 @@ public class AuthenticationDataAccess implements AuthenticationContract {
 		}
 		return result==0?false:true;
 	}
-
+	
+	public boolean checkUserToken(String token) throws Exception {
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("check_user_token"));
+			statement.setString(1, token);
+			result = statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return result==0?false:true;
+	}
+	public boolean checkClerkToken(String token) throws Exception {
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("check_clerk_token"));
+			statement.setString(1, token);
+			result = statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return result==0?false:true;
+	}
+	public boolean checkManagerToken(String token) throws Exception {
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("check_manager_token"));
+			statement.setString(1, token);
+			result = statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return result==0?false:true;
+	}
+	
+	public boolean setCustomerToken(User user) throws Exception {
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("user_token"));
+			statement.setString(1, user.getToken());
+			statement.setString(2, user.getUsername());
+			result = statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return result==0?false:true;
+	}
+	public boolean setManagerToken(User user) throws Exception {
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("manager_token"));
+			statement.setString(1, user.getToken());
+			statement.setString(2, user.getUsername());
+			result = statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return result==0?false:true;
+	}
+	public boolean setClerkToken(User user) throws Exception {
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("clerk_token"));
+			statement.setString(1, user.getToken());
+			statement.setString(2, user.getUsername());
+			result = statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return result==0?false:true;
+	}
+	public boolean removeCustomerToken(String token) throws Exception {
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("remove_customer_token"));
+			statement.setString(1, token);
+			result = statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return result==0?false:true;
+	}
+	public boolean removeClerkToken(String token) throws Exception {
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("remove_clerk_token"));
+			statement.setString(1, token);
+			result = statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return result==0?false:true;
+	}
+	public boolean removeManagerToken(String token) throws Exception {
+		int result=0;
+		try {
+			statement = connectionInstance.prepareStatement(properties.getProperty("remove_manager_token"));
+			statement.setString(1, token);
+			result = statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+//			closeConnection();
+		}
+		return result==0?false:true;
+	}
 }
