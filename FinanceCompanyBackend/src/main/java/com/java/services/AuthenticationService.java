@@ -29,6 +29,7 @@ public class AuthenticationService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ServiceResponse<AuthResponse> login(@HeaderParam("Role") String role, User user) throws Exception{
 		AuthenticationComponent<AuthenticationContract,AuthenticationDataAccess> ac = new AuthenticationComponent<>(new AuthenticationDataAccess());
+		System.out.println(role+" : "+user.getUsername());
 		AuthResponse flag = ac.login(user,role);
 		if(flag == null)	return new ServiceResponse<AuthResponse>("incorrect username/pass",400,null);
 		ServiceResponse<AuthResponse> sr = new ServiceResponse<AuthResponse>("success",200,flag);
