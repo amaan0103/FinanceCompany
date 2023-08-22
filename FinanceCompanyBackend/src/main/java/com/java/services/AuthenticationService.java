@@ -62,7 +62,7 @@ public class AuthenticationService {
 	
 	@POST
 	@Path("/logout")
-	@Secured(Role.MANAGER)
+	//@Secured(Role.MANAGER)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ServiceResponse<Boolean> logout(@HeaderParam("Authorization") String token,@HeaderParam("Role") String role) throws Exception{

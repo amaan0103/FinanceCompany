@@ -147,6 +147,7 @@ function loadLoanDetails(loan_applications) {
 //<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
         const view_doc = document.createElement("button")
         view_doc.textContent = "View Documents"
+        view_doc.style.margin = "10px"
         view_doc.classList.add("btn")
         view_doc.classList.add("btn-success")
         view_doc.setAttribute("type", "button")

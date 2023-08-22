@@ -15,7 +15,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/manager")
-@Secured(Role.MANAGER)
+//@Secured(Role.MANAGER)
 public class ManagerService {
 	public ManagerService() {}
 	

@@ -1,11 +1,58 @@
 //function to load data in Table body element
 //"applicationNumber":1,"applyDate":"2020-09-04Z","customerId":1,"loanAmount":1000.0,"loanEmi":5670.0,"loanId":1,"loanStatus":"pending","loanTenure":5
+async function downloadImage(
+    imageSrc,
+    nameOfDownload = 'my-image.png',
+) {
+    const response = await fetch(imageSrc);
+
+    const blobImage = await response.blob();
+
+    const href = URL.createObjectURL(blobImage);
+
+    const anchorElement = document.createElement('a');
+    anchorElement.href = href;
+    anchorElement.download = nameOfDownload;
+
+    document.body.appendChild(anchorElement);
+    anchorElement.click();
+
+    document.body.removeChild(anchorElement);
+    window.URL.revokeObjectURL(href);
+}
+
+function display_modal(url) {
+    const imgEle = document.createElement('img')
+    imgEle.src = url;
+    imgEle.alt = "Image Unavailable"
+    imgEle.style.width = "200px";
+    imgEle.style.margin = "2px";
+    document.getElementById("modal_body").src = url;
+    var modal = document.getElementById("modal_head");
+    modal.style.display = "block";
+  
+  }
+
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("download_button").addEventListener('click', () => {
+        downloadImage(
+            document.getElementById("modal_body").src,
+            'my-image.png',
+        )
+            .then(() => {
+                console.log('The image has been downloaded');
+            })
+            .catch(err => {
+                console.log('Error downloading image: ', err);
+            });
+    });
+})
 
 function approve_loan(application_number) {
     status_ = "approved"
 
     const req = new XMLHttpRequest();
-    req.open('POST', `http://localhost:8080/FinanceCompanyBackend/rest/manager/status/${application_number}/${status_}`,true);
+    req.open('POST', `http://localhost:8080/FinanceCompanyBackend/rest/manager/status/${application_number}/${status_}`, true);
     req.send();
 
     alert(`Loan Application Number : ${application_number} is Approved!`)
@@ -15,7 +62,7 @@ function reject_loan(application_number) {
     status_ = "rejected"
 
     const req = new XMLHttpRequest();
-    req.open('POST', `http://localhost:8080/FinanceCompanyBackend/rest/manager/status/${application_number}/${status_}`,true);
+    req.open('POST', `http://localhost:8080/FinanceCompanyBackend/rest/manager/status/${application_number}/${status_}`, true);
     req.send();
 
     alert(`Loan Application Number : ${application_number} is Rejected!`)
@@ -49,11 +96,20 @@ function loadCustomerDetails(loan_applications) {
                 const loan_status = document.createElement("td")
                 const loan_tenure = document.createElement("td")
 
-                const imgEle = document.createElement('img')
-                imgEle.src = c.products
-                imgEle.alt = "NA"
-                imgEle.style.width = "200px";
-                imgEle.style.margin = "2px";
+                // const imgEle = document.createElement('img')
+                // imgEle.src = c.products
+                // imgEle.alt = "NA"
+                // imgEle.style.width = "200px";
+                // imgEle.style.margin = "2px";
+                const view_doc = document.createElement("button")
+                view_doc.textContent = "View Documents"
+                view_doc.style.margin = "10px"
+                view_doc.classList.add("btn")
+                view_doc.classList.add("btn-success")
+                view_doc.setAttribute("type", "button")
+                view_doc.addEventListener("click", () => {
+                    display_modal(c.documents)
+                })
 
                 const approve_btn = document.createElement("button")
                 const reject_btn = document.createElement("button")
@@ -86,7 +142,7 @@ function loadCustomerDetails(loan_applications) {
                 row.appendChild(loan_tenure)
                 row.appendChild(loan_emi)
                 row.appendChild(loan_status)
-                row.appendChild(imgEle)
+                row.appendChild(view_doc)
 
                 if (c.loanStatus == "pending") {
                     row.appendChild(approve_btn)
