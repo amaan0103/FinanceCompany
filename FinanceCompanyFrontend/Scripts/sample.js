@@ -22,10 +22,10 @@ var data = [{
 function get_all_customers() {
     url = "http://localhost:8080/FinanceCompanyBackend/rest/clerk/getcustomers"
     const req = new XMLHttpRequest()
-    req.open('GET',url)
+    req.open('GET', url)
     let data = req.send();
-    resObject=JSON.parse(req.responseText)
-    console.log('hehe'+data);
+    resObject = JSON.parse(req.responseText)
+    console.log('hehe' + data);
     return resObject.responseData
     // return data
 }
@@ -33,7 +33,7 @@ function get_all_customers() {
 window
     .addEventListener(
         'DOMContentLoaded',
-        function () {  
+        function () {
             console.log(1);
             data = get_all_customers()
             console.log(data);
@@ -46,3 +46,26 @@ window
             this.document.getElementById("result").innerHTML = result
         }
     )
+
+
+class Validation {
+    constructor() { }
+    isEmail(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+    isPassword(password) {
+        passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+        if (passwordRegExp.test(password)) { 
+            return true; 
+        } else { 
+            return false; 
+        }
+    }
+    isMobile(mobile) {
+        return mobile.toString().length() == 10
+    }
+    validate(){
+
+    }
+}

@@ -57,8 +57,6 @@ async function apply_loan() {
     var customer_id = this.document.getElementById("customer_id").value
     var loan_type = this.document.getElementById("loan_type").value
     var loan_id = { "personal": 1, "education": 2, "car": 3, "home": 4 }[loan_type]
-    //var interest = get_interest(loan_type)
-    //var doa = this.document.getElementById("doa").value
     var loan_tenure = this.document.getElementById("loan_tenure").value
     var loan_amount = this.document.getElementById("loan_amount").value
     var loan_emi = this.document.getElementById("loan_emi").value
@@ -90,49 +88,6 @@ async function apply_loan() {
     req.send(JSON.stringify(data))
 
 
-    alert("Loan Applied")
+    alert("Loan Succesfully Applied!")
 
 }
-
-    // const req = new XMLHttpRequest()
-    // req.onreadystatechange = function () {
-    //     if (req.status === 200 && req.readyState === 4) {
-    //         console.log(JSON.parse(req.responseText))
-    //     }
-    // }
-    // req.open('POST', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/submitApplication', true)
-    // req.setRequestHeader("Content-Type", "application/json")
-    // req.send(JSON.stringify(data))
-
-
-
-/*
-data = {
-    //"applicationNumber" : 11,
-    "customerId" : customer_id,
-    "loanAmount" : loan_amount,
-    "loanId" : loan_id,
-    "loanStatus" : "pending",
-    "loanTenure" : loan_tenure,
-    "loanEmi" : loan_emi,
-    "document" : reader.result
-}
-
-const req = new XMLHttpRequest();
-req.onreadystatechange = () => {
-    if (req.status === 200 && req.readyState === 4) {
-        window.alert(req.responseText)
-    }
-}
-
-req.open('POST', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/submitApplication',true);
-req.setRequestHeader("Content-Type","application/json")
-req.send(JSON.stringify(data));
-
- 
-alert("Loan Applied")
- 
-}
-
-
-*/

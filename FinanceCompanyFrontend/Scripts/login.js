@@ -1,9 +1,11 @@
+
+
 async function fetchData(data, role) {
     try {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
-        headers.append("Role",{1:"MANAGER",2:"CLERK",3:"CUSTOMER"}[role])
-        console.log("this: "+{1:"MANAGER",2:"CLERK",3:"CUSTOMER"}[role])
+        headers.append("Role", { 1: "MANAGER", 2: "CLERK", 3: "CUSTOMER" }[role])
+        console.log("this: " + { 1: "MANAGER", 2: "CLERK", 3: "CUSTOMER" }[role])
         const requestOptions = {
             method: 'POST',
             headers: headers,
@@ -30,29 +32,29 @@ async function upload_data() {
         "password": password,
     }
     var post_response = await fetchData(data, role)
-    if(post_response.statusCode == 200){
+    if (post_response.statusCode == 200) {
         alert("Welcome!")
         customer_id = post_response.responseData.customerId
         // role_id = post_response.responseData.role
         localStorage.clear()
         localStorage.setItem('customer_id', customer_id)
-        switch (role) {
-            case 1:
-                location.replaace("Pages/Manager/manager_home.html")
-                break;
-            case 2:
-                location.replace("Pages/Clerk/clerk_home.html")
-                break;
-            case 3:
-                location.replace("Pages/Customer/customer_home.html")
-                break;
+        console.log(role);
+
+        if(role==1){
+            location.replaace("Pages/Manager/manager_home.html")
+        }else if(role==2){
+            location.replace("Pages/Clerk/clerk_home.html")
+        }else{
+            location.replace("Pages/Customer/customer_home.html")
         }
-    }else{
+
+    } 
+    else {
         alert("InValid Username or Password")
     }
 }
-window.addEventListener('DOMContentLoaded',()=>{
-    document.getElementById("loginButton").addEventListener('click',async ()=>{
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("loginButton").addEventListener('click', async () => {
         upload_data()
     })
 })

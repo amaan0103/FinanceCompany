@@ -53,7 +53,6 @@ async function convertToBase64(file) {
     });
 }
 
-
 async function upload_loan_data() {
 
     var customer_id = this.document.getElementById("customer_id").value

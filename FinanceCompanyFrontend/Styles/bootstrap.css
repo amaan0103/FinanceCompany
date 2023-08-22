@@ -26,9 +26,6 @@
 th {
   cursor: pointer;
 }
-td{
-  padding: 5px;
-}
 
 :root,
 [data-bs-theme=light] {

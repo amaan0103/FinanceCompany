@@ -1,3 +1,23 @@
+class Validation {
+    constructor() { }
+    isEmail(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+    isPassword(password) {
+        passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+        if (passwordRegExp.test(password)) { 
+            return true; 
+        } else { 
+            return false; 
+        }
+    }
+    isMobile(mobile) {
+        return mobile.toString().length == 10
+    }
+}
+validate = new Validation()
+
 function send_to_customertable(data) {
     const req = new XMLHttpRequest()
     req.open('POST', 'http://localhost:8080/FinanceCompanyBackend/rest/clerk/addCustomer', true);
@@ -45,6 +65,21 @@ function upload_customer_data() {
     var email = document.getElementById("email").value
     var password = document.getElementById("password").value
     var password_ = document.getElementById("password_").value
+
+    //form validation
+    if(!validate.isEmail(email)){
+        alert("Invalid Email! Please Try Again")
+        return;
+    }
+    if(!validate.isMobile(mobile)){
+        alert("Invalid Mobile Number! Please Try Again")
+        return;
+    }
+    if(!validate.isPassword(password)){
+        alert("The password should be at least 8 characters long. It should contain at least one Uppercase letter, one Lowercase letter, and one Number.")
+        alert("Your Password didn't meet the criteria, Please Try Again!")
+        return;
+    }
 
     if (password != password_) {
         alert("Password Mismatch! Please Type Again")
