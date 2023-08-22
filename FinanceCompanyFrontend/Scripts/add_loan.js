@@ -62,9 +62,8 @@ async function apply_loan() {
 
     const imgElement = this.document.getElementById('document')
     const file = imgElement.files[0]
-    //const reader = new FileReader()
     const document = await convertToBase64(file)
-    console.log(document);
+    
     const data = {
         "customerId": customer_id,
         "loanAmount": loan_amount,

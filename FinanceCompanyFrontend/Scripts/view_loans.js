@@ -151,9 +151,7 @@ function loadLoanDetails(loan_applications) {
         view_doc.classList.add("btn")
         view_doc.classList.add("btn-success")
         view_doc.setAttribute("type", "button")
-        //view_doc.setAttribute("onclick", `display_modal(${c.documents})`)
-        //view_doc.setAttribute("data-toggle", "modal")
-        //view_doc.setAttribute("data-target", "#modal_head")
+        
         view_doc.addEventListener("click",()=>{
           display_modal(c.documents)
         })

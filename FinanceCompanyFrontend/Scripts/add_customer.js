@@ -61,7 +61,6 @@ function upload_customer_data() {
         data2 = {
             "username": email,
             "password": password,
-            "role": 3
         }
 
         send_to_customertable(data1)

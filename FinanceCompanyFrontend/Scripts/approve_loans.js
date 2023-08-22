@@ -30,8 +30,8 @@ function display_modal(url) {
     document.getElementById("modal_body").src = url;
     var modal = document.getElementById("modal_head");
     modal.style.display = "block";
-  
-  }
+
+}
 
 window.addEventListener('DOMContentLoaded', () => {
     document.getElementById("download_button").addEventListener('click', () => {
@@ -107,6 +107,7 @@ function loadCustomerDetails(loan_applications) {
                 view_doc.classList.add("btn")
                 view_doc.classList.add("btn-success")
                 view_doc.setAttribute("type", "button")
+
                 view_doc.addEventListener("click", () => {
                     display_modal(c.documents)
                 })
@@ -118,11 +119,13 @@ function loadCustomerDetails(loan_applications) {
                 approve_btn.setAttribute("type", "button")
                 approve_btn.setAttribute("id", c.applicationNumber)
                 approve_btn.classList.add("btn-success")
+                approve_btn.addEventListener("click", buttonPressed);
 
                 reject_btn.textContent = "Reject"
                 reject_btn.setAttribute("type", "button")
                 reject_btn.setAttribute("id", c.applicationNumber)
                 reject_btn.classList.add("btn-danger")
+                reject_btn.addEventListener("click", buttonPressed);
 
 
                 application_number.textContent = c.applicationNumber
@@ -155,12 +158,6 @@ function loadCustomerDetails(loan_applications) {
             }
         )
 
-    const buttons = document.getElementsByTagName("button");
-
-    for (let button of buttons) {
-        button.addEventListener("click", buttonPressed);
-    }
-
 }
 
 //function to get all the products
@@ -178,18 +175,24 @@ function getApplications() {
     req.send()
 }
 
-//function to display contents on the page
-function display_on_page(ID, name, gender, mobile, email) {
 
-}
-
+window.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById("xMark").addEventListener('click',()=>{
+        document.getElementById("modal_head").style.display = "none";
+      })
+})
+window.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById("close").addEventListener('click',()=>{
+        document.getElementById("modal_head").style.display = "none";
+      })
+      
+})
 //code which will be executed immediately afetr DOM content creation is completed and the page is loaded in the browser
-window
-    .addEventListener(
+window.addEventListener(
         'DOMContentLoaded',
         function () {
             getApplications()
-        }
+        },
     )
 
 
