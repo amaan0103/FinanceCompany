@@ -108,7 +108,6 @@ btn.addEventListener('click', () => {
     });
 });
 
-
 function display_modal(url) {
   const imgEle = document.createElement('img')
   imgEle.src = url;
