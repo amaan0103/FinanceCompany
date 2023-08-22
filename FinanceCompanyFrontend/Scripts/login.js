@@ -2,6 +2,7 @@ async function fetchData(data, role) {
     try {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
+        headers.append('GET', 'POST', 'OPTIONS');
         headers.append("Role",{1:"MANAGER",2:"CLERK",3:"CUSTOMER"}[role])
         console.log("this: "+{1:"MANAGER",2:"CLERK",3:"CUSTOMER"}[role])
         const requestOptions = {
