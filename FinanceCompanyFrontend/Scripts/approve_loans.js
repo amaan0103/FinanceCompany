@@ -101,30 +101,32 @@ function loadCustomerDetails(loan_applications) {
                 // imgEle.alt = "NA"
                 // imgEle.style.width = "200px";
                 // imgEle.style.margin = "2px";
+                const parent = document.createElement("td")
                 const view_doc = document.createElement("button")
-                view_doc.textContent = "View Documents"
-                view_doc.style.margin = "10px"
+                parent.appendChild(view_doc)
+                view_doc.textContent = "Documents"
                 view_doc.classList.add("btn")
-                view_doc.classList.add("btn-success")
+                view_doc.classList.add("btn-outline-secondary")
                 view_doc.setAttribute("type", "button")
 
                 view_doc.addEventListener("click", () => {
                     display_modal(c.documents)
                 })
 
+                const big_parent = document.createElement("td")
                 const approve_btn = document.createElement("button")
                 const reject_btn = document.createElement("button")
 
                 approve_btn.textContent = "Approve"
-                approve_btn.setAttribute("type", "button")
-                approve_btn.setAttribute("id", c.applicationNumber)
+                approve_btn.classList.add("btn")
                 approve_btn.classList.add("btn-success")
+                approve_btn.setAttribute("id", c.applicationNumber)
                 approve_btn.addEventListener("click", buttonPressed);
 
                 reject_btn.textContent = "Reject"
-                reject_btn.setAttribute("type", "button")
-                reject_btn.setAttribute("id", c.applicationNumber)
+                reject_btn.classList.add("btn")
                 reject_btn.classList.add("btn-danger")
+                reject_btn.setAttribute("id", c.applicationNumber)
                 reject_btn.addEventListener("click", buttonPressed);
 
 
@@ -145,11 +147,24 @@ function loadCustomerDetails(loan_applications) {
                 row.appendChild(loan_tenure)
                 row.appendChild(loan_emi)
                 row.appendChild(loan_status)
-                row.appendChild(view_doc)
+                row.appendChild(parent)
 
                 if (c.loanStatus == "pending") {
-                    row.appendChild(approve_btn)
-                    row.appendChild(reject_btn)
+                    div_ele = document.createElement("div")
+                    div_ele.classList.add("btn-group")
+                    div_ele.appendChild(approve_btn)
+                    div_ele.appendChild(reject_btn)
+                    big_parent.appendChild(div_ele)
+                    row.appendChild(big_parent)
+                }else{
+                    div_ele = document.createElement("div")
+                    div_ele.classList.add("btn-group")
+                    div_ele.appendChild(approve_btn)
+                    div_ele.appendChild(reject_btn)
+                    big_parent.appendChild(div_ele)
+                    approve_btn.classList.add("disabled")
+                    reject_btn.classList.add("disabled")
+                    row.appendChild(big_parent)
                 }
 
                 row.classList.add("table-light")

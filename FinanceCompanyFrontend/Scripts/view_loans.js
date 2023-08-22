@@ -144,11 +144,12 @@ function loadLoanDetails(loan_applications) {
         //imgEle.style.width = "200px";
         //imgEle.style.margin = "2px";
 //<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+        const parent = document.createElement("td")
         const view_doc = document.createElement("button")
+        parent.appendChild(view_doc)
         view_doc.textContent = "View Documents"
-        view_doc.style.margin = "10px"
         view_doc.classList.add("btn")
-        view_doc.classList.add("btn-success")
+        view_doc.classList.add("btn-outline-secondary")
         view_doc.setAttribute("type", "button")
         
         view_doc.addEventListener("click",()=>{
@@ -172,7 +173,7 @@ function loadLoanDetails(loan_applications) {
         row.appendChild(loan_tenure)
         row.appendChild(loan_emi)
         row.appendChild(loan_status)
-        row.appendChild(view_doc)
+        row.appendChild(parent)
 
         row.classList.add("table-light")
         row.setAttribute("id", c.applicationNumber)

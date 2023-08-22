@@ -93,8 +93,8 @@ async function downloadImage(
   window.URL.revokeObjectURL(href);
 }
 
-window.addEventListener('DOMContentLoaded',()=>
-    document.getElementById('download_button').addEventListener('click', () => {
+window.addEventListener('DOMContentLoaded', () =>
+  document.getElementById('download_button').addEventListener('click', () => {
     downloadImage(
       document.getElementById("modal_body").src,
       'my-image.png',
@@ -128,8 +128,8 @@ const buttonPressed = e => {
     req.open('DELETE', `http://localhost:8080/FinanceCompanyBackend/rest/customer/deleteApplication/${application_number}`, true);
 
     req.send();
+    alert(`Loan Application ID : ${application_number} is Deleted!`)
   }
-  alert(`Loan Application ID : ${application_number} is Deleted!`)
   location.reload()
 }
 
@@ -148,7 +148,9 @@ function loadLoanDetails(loan_applications) {
         const loan_status = document.createElement("td")
         const loan_tenure = document.createElement("td")
         const x = document.createElement("td")
+        const parent_del = document.createElement("td")
         const del_btn = document.createElement("button")
+        parent_del.appendChild(del_btn)
 
 
         //const imgEle = document.createElement('img')
@@ -157,11 +159,13 @@ function loadLoanDetails(loan_applications) {
         //imgEle.style.width = "200px";
         //imgEle.style.margin = "2px";
         //<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+
+        const parent = document.createElement("td")
         const view_doc = document.createElement("button")
+        parent.appendChild(view_doc)
         view_doc.textContent = "View Documents"
-        view_doc.style.margin = "10px"
         view_doc.classList.add("btn")
-        view_doc.classList.add("btn-success")
+        view_doc.classList.add("btn-outline-secondary")
         view_doc.setAttribute("type", "button")
 
         view_doc.addEventListener("click", () => {
@@ -176,12 +180,14 @@ function loadLoanDetails(loan_applications) {
         loan_status.textContent = c.loanStatus;
         loan_tenure.textContent = c.loanTenure;
 
-        del_btn.textContent = "DELETE"
+        del_btn.textContent = "WITHDRAW"
         del_btn.setAttribute("id", c.applicationNumber)
         del_btn.classList.add("btn")
-        del_btn.classList.add("btn-outline-danger")
-        del_btn.classList.add("m-2")
+        del_btn.classList.add("btn-danger")
         del_btn.addEventListener("click", buttonPressed);
+        if (c.loanStatus.toLowerCase() != "pending") {
+          del_btn.classList.add("disabled")
+        }
         //del_btn.setAttribute("style","color:white;")
 
         row.appendChild(application_number)
@@ -191,8 +197,8 @@ function loadLoanDetails(loan_applications) {
         row.appendChild(loan_tenure)
         row.appendChild(loan_emi)
         row.appendChild(loan_status)
-        row.appendChild(view_doc)
-        row.appendChild(del_btn)
+        row.appendChild(parent)
+        row.appendChild(parent_del)
 
         row.classList.add("table-light")
         row.setAttribute("id", c.applicationNumber)
@@ -217,15 +223,15 @@ function getLoans() {
   req.send()
 }
 
-window.addEventListener('DOMContentLoaded',()=>
-document.getElementById("close").addEventListener('click', () => {
-  document.getElementById("modal_head").style.display = "none";
-}))
+window.addEventListener('DOMContentLoaded', () =>
+  document.getElementById("close").addEventListener('click', () => {
+    document.getElementById("modal_head").style.display = "none";
+  }))
 
-window.addEventListener('DOMContentLoaded',()=>
-document.getElementById("xMark").addEventListener('click', () => {
-  document.getElementById("modal_head").style.display = "none";
-}))
+window.addEventListener('DOMContentLoaded', () =>
+  document.getElementById("xMark").addEventListener('click', () => {
+    document.getElementById("modal_head").style.display = "none";
+  }))
 
 window
   .addEventListener(

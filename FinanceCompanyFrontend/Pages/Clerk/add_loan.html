@@ -50,16 +50,42 @@
                 <div class="form-floating mb-3">
                     <input type="number" class="form-control" id="loan_tenure" placeholder="Loan Tenure"
                         oninput="calculate_emi()" required>
-                    <label for="floatingInput">Loan Tenure</label>
+                    <label for="floatingInput">Loan Tenure (in Months)</label>
                 </div>
                 <div class="form-floating">
-                    <input type="number" class="form-control" id="loan_emi" placeholder="EMI" disabled>
-                    <label for="floatingInput">EMI</label>
+                    <input type="number" class="form-control" id="loan_emi" placeholder="Monthly Payment" disabled>
+                    <label for="floatingInput">Monthly Payment (EMI)</label>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="document" class="form-label mt-4">Upload the Document</label>
+                    <label for="document" class="form-label mt-4">Upload Relevant Document</label>
                     <input class="form-control" type="file" id="document" required>
                 </div>
+                <fieldset class="form-group btn-group mb-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                      <label class="form-check-label" for="optionsRadios1">
+                        <small>Aadhaar Card</small> 
+                      </label>
+                    </div>
+                    <div class="form-check" style="margin-left: 10px;">
+                      <input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                      <label class="form-check-label" for="optionsRadios2">
+                        <small>PAN Card</small>
+                      </label>
+                    </div>
+                    <div class="form-check" style="margin-left: 10px;">
+                        <input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                        <label class="form-check-label" for="optionsRadios2">
+                          <small>Bank Statement</small>
+                        </label>
+                      </div>
+                      <div class="form-check" style="margin-left: 10px;">
+                        <input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                        <label class="form-check-label" for="optionsRadios2">
+                          <small>Salary Slip</small>
+                        </label>
+                      </div>
+                </fieldset>
                 <div class="form-floating mb-3" style="text-align: center;">
                     <input type="button" class="btn btn-outline-dark btn-lg" id="btnUpload" onclick="apply_loan()" value="Submit"></input>
                 </div>

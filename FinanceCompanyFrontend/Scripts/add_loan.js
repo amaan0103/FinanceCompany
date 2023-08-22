@@ -28,11 +28,14 @@ function set_interest() {
 }
 
 function calculate_emi() {
-    var value = document.getElementById("loan_type").value
-    var interest = r = get_interest(value)
-    var tenure = n = document.getElementById("loan_tenure").value
-    var amount = P = document.getElementById("loan_amount").value
-    var emi = P * r * (Math.pow((1 + r), n) / (Math.pow((1 + r), n - 1)))
+    var loanAmount = document.getElementById("loan_amount").value;
+    var interestRate = get_interest(document.getElementById("loan_type").value)
+    var loanDuration = document.getElementById("loan_tenure").value;
+     
+   var interestPerYear = (loanAmount * interestRate)/100; 
+   var monthlyInterest = interestPerYear/12;
+    
+    var emi = monthlyInterest + (loanAmount/loanDuration);
     document.getElementById("loan_emi").value = emi
 }
 
