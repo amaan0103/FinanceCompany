@@ -65,6 +65,7 @@ public class ClerkService {
 	public ServiceResponse<FullApplication> submitApplication(FullApplication app) throws Exception{
 		try {
 //		ClerkComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new ClerkComponent<>(new LoanApplicationDataAccess());
+			System.out.println("here");
 			LoanApplicationComponent<LoanApplicationContract,LoanApplicationDataAccess> cc = new LoanApplicationComponent<>(new LoanApplicationDataAccess());
 		boolean flag = cc.addApplication(app);
 		return new ServiceResponse<FullApplication>("added",200,app);

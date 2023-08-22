@@ -38,7 +38,9 @@ public class LoanApplicationComponent<TContract, TImplementation> implements Loa
 		app.setApplicationNumber(System.currentTimeMillis());
 		LoanApplication loanApplication = new LoanApplication(app.getApplicationNumber(),app.getCustomerId(),app.getLoanId(),
 		app.getLoanAmount(),app.getLoanStatus(),app.getApplyDate(),app.getLoanTenure(),app.getLoanEmi());
+		System.out.println("before adding app");
 		boolean flag = ((LoanApplicationContract) dao).addApplication(loanApplication);
+		System.out.println("after adding app");
 		if(!flag)	return false;
 		Documents docs = new Documents(app.getApplicationNumber(),app.getDocuments());
 		DocumentContract docdao = new DocumentDataAccess();
