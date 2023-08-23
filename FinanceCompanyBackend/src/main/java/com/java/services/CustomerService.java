@@ -2,19 +2,25 @@ package com.java.services;
 
 import java.util.List;
 
+import com.java.businesslayer.implementations.CustomersComponent;
 import com.java.businesslayer.implementations.DocumentComponent;
 import com.java.businesslayer.implementations.LoanApplicationComponent;
 import com.java.businesslayer.implementations.LoanComponent;
+import com.java.dataaccess.contracts.CustomerContract;
 import com.java.dataaccess.contracts.DocumentContract;
 import com.java.dataaccess.contracts.LoanApplicationContract;
 import com.java.dataaccess.contracts.LoanContract;
+import com.java.dataaccess.implementations.CustomerDataAccess;
 import com.java.dataaccess.implementations.DocumentDataAccess;
 import com.java.dataaccess.implementations.LoanApplicationDataAccess;
 import com.java.dataaccess.implementations.LoanDataAccess;
+import com.java.entities.Customer;
 import com.java.entities.Documents;
 import com.java.entities.FullApplication;
 import com.java.entities.Loan;
 import com.java.entities.LoanApplication;
+import com.java.entities.Role;
+import com.java.entities.Secured;
 import com.java.entities.ServiceResponse;
 
 import jakarta.ws.rs.Consumes;
@@ -28,6 +34,7 @@ import jakarta.ws.rs.core.MediaType;
 
 
 @Path("/customer")
+//@Secured(Role.CUSTOMER)
 public class CustomerService {
 
 	public CustomerService() {}
@@ -44,6 +51,27 @@ public class CustomerService {
 		return new ServiceResponse<FullApplication>("added",200,app);
 		}catch(Exception e) {
 			return new ServiceResponse<FullApplication>(e.getMessage(),400,null);
+		}
+	}
+	
+	@GET
+	@Path("/getCustomer/{customerId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ServiceResponse<Customer> getCustomers(@PathParam("customerId") long customerId){
+		try {
+//		ClerkComponent<CustomerContract,CustomerDataAccess> cc = new ClerkComponent<>( new CustomerDataAccess());
+		CustomersComponent<CustomerContract,CustomerDataAccess> cc = new CustomersComponent<>( new CustomerDataAccess());
+		List<Customer> list = cc.getAllCustomers();
+		Customer c = null;
+		for(Customer customer : list) {
+			if(customer.getCustomerId()==customerId) {
+				c = customer;
+				break;
+			}
+		}
+		return new ServiceResponse<Customer>("records found",200,c);
+		} catch (Exception e) {
+			return new ServiceResponse<Customer>(e.getMessage(), 400, null);
 		}
 	}
 	

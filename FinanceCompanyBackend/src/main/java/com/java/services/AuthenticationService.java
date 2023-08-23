@@ -7,6 +7,7 @@ import com.java.dataaccess.contracts.CustomerContract;
 import com.java.dataaccess.implementations.AuthenticationDataAccess;
 import com.java.dataaccess.implementations.CustomerDataAccess;
 import com.java.entities.AuthResponse;
+import com.java.entities.Customer;
 import com.java.entities.Role;
 import com.java.entities.Secured;
 import com.java.entities.ServiceResponse;
@@ -41,7 +42,7 @@ public class AuthenticationService {
 	@Path("/signup")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ServiceResponse<AuthResponse> signup(@HeaderParam("role") String role, User user) throws Exception{
+	public ServiceResponse<AuthResponse> signup(@HeaderParam("Role") String role, User user) throws Exception{
 		AuthenticationComponent<AuthenticationContract,AuthenticationDataAccess> ac = new AuthenticationComponent<>(new AuthenticationDataAccess());
 		long flag = ac.signup(user);
 		if(flag==-1)	return new ServiceResponse<AuthResponse>("incorrect username",400,null);
@@ -49,12 +50,23 @@ public class AuthenticationService {
 //		sr.setCustomerId(flag);
 		return sr;
 	}
-	
+	@POST
+	@Path("/addCustomer")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ServiceResponse<Customer> addCustomer(Customer c) throws Exception{
+//		ClerkComponent<CustomerContract,CustomerDataAccess> cc = new ClerkComponent<>( new CustomerDataAccess());
+		CustomersComponent<CustomerContract,CustomerDataAccess> cc = new CustomersComponent<>( new CustomerDataAccess());
+		boolean flag = cc.addCustomer(c);
+		if(flag)	return new ServiceResponse<Customer>("added",200,c);
+		
+		return new ServiceResponse<Customer>("Failed",400,c);
+	}
 	@POST
 	@Path("/changePassword/{customerId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ServiceResponse<Boolean> changePassword(@PathParam("customerId") long customerId, String password) throws Exception{
+	public ServiceResponse<Boolean> changePassword(@PathParam("customerId") long customerId, User password) throws Exception{
 		AuthenticationComponent<AuthenticationContract,AuthenticationDataAccess> ac = new AuthenticationComponent<>(new AuthenticationDataAccess());
 		boolean flag = ac.changePassword(customerId, password);
 		if(flag)	return new ServiceResponse<Boolean>("changed successfully",200,flag);
@@ -69,6 +81,7 @@ public class AuthenticationService {
 	public ServiceResponse<Boolean> logout(@HeaderParam("Authorization") String token,@HeaderParam("Role") String role) throws Exception{
 		AuthenticationComponent<AuthenticationContract,AuthenticationDataAccess> ac = new AuthenticationComponent<>(new AuthenticationDataAccess());
 		token = token.substring(7);
+		System.out.println("logout service");
 		boolean flag = ac.logout(token,role);
 		if(!flag)	return new ServiceResponse<Boolean>("unsuccessful logout",400,null);
 		return new ServiceResponse<Boolean>("success",200,flag);

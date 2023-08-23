@@ -45,8 +45,12 @@ public class AuthenticationComponent<TContract, TImplementation> implements Auth
 		else if(role.equals("CLERK"))	userDB = ((AuthenticationDataAccess) dao).getClerk(user.getUsername());
 		else	userDB=((AuthenticationDataAccess) dao).getUser(user.getUsername());
 		
+		System.out.println("hashed login : "+hashPasswords(user.getPassword()));
+		
 		if(userDB == null)	return null;
 		if(!isPassValid(user.getPassword(),userDB.getPassword()))	return null;
+		
+		
 		
 		user.setToken(new RandomString().nextString());
 		boolean flag = false;
@@ -82,13 +86,17 @@ public class AuthenticationComponent<TContract, TImplementation> implements Auth
     }
 
 	@Override
-	public boolean changePassword(long customerId, String pass) throws Exception {
-		return ((AuthenticationContract) dao).changePassword(customerId,hashPasswords(pass));
+	public boolean changePassword(long customerId, User pass) throws Exception {
+		System.out.println("Pass: "+pass.getPassword());
+		String newPass = hashPasswords(pass.getPassword());
+		System.out.println("changed: "+newPass);
+		return ((AuthenticationContract) dao).changePassword(customerId,newPass);
 	}
 
 	@Override
 	public boolean logout(String token, String role) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("logout business");
 		if(role.equals("CUSTOMER"))	return ((AuthenticationDataAccess) dao).removeCustomerToken(token);
 		else if(role.equals("MANAGER"))	return ((AuthenticationDataAccess) dao).removeManagerToken(token);
 		else	return ((AuthenticationDataAccess) dao).removeClerkToken(token);

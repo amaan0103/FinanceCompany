@@ -15,6 +15,8 @@ import com.java.entities.Customer;
 import com.java.entities.FullApplication;
 import com.java.entities.Loan;
 import com.java.entities.LoanApplication;
+import com.java.entities.Role;
+import com.java.entities.Secured;
 import com.java.entities.ServiceResponse;
 
 import jakarta.ws.rs.Consumes;
@@ -26,6 +28,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/clerk")
+//@Secured(Role.CLERK)
 public class ClerkService {
 	
 	public ClerkService() throws Exception {
@@ -60,6 +63,7 @@ public class ClerkService {
 	
 	@POST
 	@Path("/submitApplication")
+	
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ServiceResponse<FullApplication> submitApplication(FullApplication app) throws Exception{

@@ -244,8 +244,9 @@ public class AuthenticationDataAccess implements AuthenticationContract {
 	public boolean removeCustomerToken(String token) throws Exception {
 		int result=0;
 		try {
+			System.out.println("logout data access");
 			statement = connectionInstance.prepareStatement(properties.getProperty("remove_customer_token"));
-			statement.setString(1, token);
+//			statement.setString(1, token);
 			result = statement.executeUpdate();
 		}catch(Exception e) {
 			throw e;
@@ -259,7 +260,7 @@ public class AuthenticationDataAccess implements AuthenticationContract {
 		int result=0;
 		try {
 			statement = connectionInstance.prepareStatement(properties.getProperty("remove_clerk_token"));
-			statement.setString(1, token);
+//			statement.setString(1, token);
 			result = statement.executeUpdate();
 		}catch(Exception e) {
 			throw e;
@@ -272,8 +273,7 @@ public class AuthenticationDataAccess implements AuthenticationContract {
 	public boolean removeManagerToken(String token) throws Exception {
 		int result=0;
 		try {
-			statement = connectionInstance.prepareStatement(properties.getProperty("remove_manager_token"));
-			statement.setString(1, token);
+			statement = connectionInstance.prepareStatement("update manager_auth set token=null where token is not null");
 			result = statement.executeUpdate();
 		}catch(Exception e) {
 			throw e;
